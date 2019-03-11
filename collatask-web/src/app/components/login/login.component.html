@@ -1,0 +1,144 @@
+<div class="collatask-login-margin" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"
+    fxLayoutAlign="center center" fxFlexFill>
+    <div fxFlex.xs="80" fxFlex.sm="80" fxFlex.md="40" fxFlex="40">
+        <mat-card>
+            <mat-card-header>
+                <img mat-card-avatar src="../../../assets/icons/icon-72x72.png">
+                <mat-card-title>
+                    <strong class="collatask-login-header-font">Collab</strong>
+                    <span class="collatask-login-header-font">Task</span>
+                </mat-card-title>
+                <mat-card-subtitle>Collaborative To-Do List App</mat-card-subtitle>
+            </mat-card-header>
+            <mat-progress-bar color="accent" *ngIf="isInProgress" mode="indeterminate"></mat-progress-bar>
+            <mat-card-content>
+                <mat-tab-group>
+                    <mat-tab label="SIGN-IN" [disabled]="isInProgress">
+                        <section class="collatask-content-padding">
+                            <div fxFlexFill fxLayoutGap="3%" fxLayout="column">
+                                <form [formGroup]="loginFormGroup" fxLayout="column" fxLayoutGap="3%" fxFlexFill>
+                                    <mat-form-field fxFlexFill>
+                                        <input matInput required placeholder="Email" formControlName="emailAddress"
+                                            [readonly]="isInProgress">
+                                        <mat-error
+                                            *ngIf="loginFormGroup.controls['emailAddress'].hasError('email') && !loginFormGroup.controls['emailAddress'].hasError('required')">
+                                            Please enter a valid <strong>email address</strong>
+                                        </mat-error>
+                                        <mat-error *ngIf="loginFormGroup.controls['emailAddress'].hasError('required')">
+                                            Email is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-icon matSuffix>email</mat-icon>
+                                    </mat-form-field>
+                                    <mat-form-field fxFlexFill>
+                                        <input type="password" matInput required placeholder="Password"
+                                            formControlName="passwordField" [readonly]="isInProgress">
+                                        <mat-error
+                                            *ngIf="loginFormGroup.controls['passwordField'].hasError('required')">
+                                            Password is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-icon matSuffix>lock_outline</mat-icon>
+                                    </mat-form-field>
+                                </form>
+                                <button mat-stroked-button [disabled]="isInProgress"
+                                    (click)="btnGoogleSignIn_Clicked()">
+                                    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="2%">
+                                        <img src="../../../assets/icons/google-icon-24x24.png">
+                                        <span>Sign in with Google</span>
+                                    </div>
+                                </button>
+                            </div>
+                        </section>
+                        <footer fxLayoutAlign="end center" fxLayoutGap="1%">
+                            <button mat-flat-button [disabled]="isInProgress" (click)="btnForgotPass_Clicked()">
+                                Forgot Password
+                            </button>
+                            <button mat-raised-button [disabled]="isInProgress" (click)="btnSignIn_Clicked()"
+                                color="primary">
+                                Sign In
+                            </button>
+                        </footer>
+                    </mat-tab>
+                    <mat-tab label="SIGN-UP" [disabled]="isInProgress">
+                        <section class="collatask-content-padding">
+                            <div fxFlexFill fxLayout="column">
+                                <form [formGroup]="registerFormGroup" fxLayout="column" fxLayoutGap="3%" fxFlexFill>
+                                    <mat-form-field fxFlexFill>
+                                        <input matInput required placeholder="Email" formControlName="emailAddress"
+                                            [readonly]="isInProgress">
+                                        <mat-error
+                                            *ngIf="registerFormGroup.controls['emailAddress'].hasError('email') && !registerFormGroup.controls['emailAddress'].hasError('required')">
+                                            Please enter a valid <strong>email address</strong>
+                                        </mat-error>
+                                        <mat-error
+                                            *ngIf="registerFormGroup.controls['emailAddress'].hasError('required')">
+                                            Email is <strong>required</strong>
+                                        </mat-error>
+                                        <mat-icon matSuffix>email</mat-icon>
+                                    </mat-form-field>
+                                    <div formGroupName="passwordField" fxLayout="column" fxLayoutGap="3%">
+                                        <mat-form-field fxFlexFill>
+                                            <input type="password" matInput required placeholder="Password"
+                                                formControlName="newPassword" [readonly]="isInProgress" minlength="6">
+                                            <mat-hint>Password must be at least <strong>6 characters long</strong>
+                                            </mat-hint>
+                                            <mat-icon matSuffix>lock_outline</mat-icon>
+                                        </mat-form-field>
+                                        <mat-form-field fxFlexFill>
+                                            <input type="password" matInput placeholder="Confirm Password"
+                                                formControlName="confirmPassword" [readonly]="isInProgress"
+                                                [errorStateMatcher]="passwordErrorMatcher">
+                                            <mat-error
+                                                *ngIf="registerFormGroup.controls['passwordField'].controls['confirmPassword'].hasError('notSame')">
+                                                Password <strong>does not match</strong>
+                                            </mat-error>
+                                            <mat-icon matSuffix>check</mat-icon>
+                                        </mat-form-field>
+                                    </div>
+                                </form>
+
+                                <!-- <mat-form-field fxFlexFill>
+                                    <input matInput required placeholder="Email"
+                                        [formControl]="registerFormGroup.emailAddress" [readonly]="isInProgress">
+                                    <mat-icon matSuffix>email</mat-icon>
+                                    <mat-error
+                                        *ngIf="registerFormGroup.emailAddress.hasError('email') && !registerFormGroup.emailAddress.hasError('required')">
+                                        Please enter a valid <strong>email address</strong>
+                                    </mat-error>
+                                    <mat-error *ngIf="registerFormGroup.emailAddress.hasError('required')">
+                                        Email is <strong>required</strong>
+                                    </mat-error>
+                                </mat-form-field>
+                                <form [formGroup]="registerFormGroup.passwordField" fxFlexFill>
+                                    <div fxFlexFill fxLayoutGap="3%" fxLayout="column">
+                                        <mat-form-field>
+                                            <input type="password" matInput placeholder="Password" minlength="6"
+                                                formControlName="newPassword" [readonly]="isInProgress">
+                                            <mat-icon matSuffix>lock_outline</mat-icon>
+                                            <mat-hint>Password must be at least <strong>6 characters long</strong>
+                                            </mat-hint>
+                                        </mat-form-field>
+                                        <mat-form-field>
+                                            <input type="password" matInput placeholder="Confirm Password"
+                                                formControlName="confirmPassword" [readonly]="isInProgress"
+                                                [errorStateMatcher]="passwordErrorMatcher">
+                                            <mat-icon matSuffix>check</mat-icon>
+                                            <mat-error *ngIf="registerFormGroup.passwordField.hasError('notSame')">
+                                                Password <strong>does not match</strong>
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </form> -->
+                            </div>
+                        </section>
+                        <footer fxLayoutAlign="end center" fxLayoutGap="1%">
+                            <button mat-raised-button [disabled]="isInProgress" (click)="btnSignUp_Clicked()"
+                                color="primary">
+                                Sign Up
+                            </button>
+                        </footer>
+                    </mat-tab>
+                </mat-tab-group>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>

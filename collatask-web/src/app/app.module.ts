@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
@@ -17,13 +17,18 @@ const PRINT_BREAKPOINTS = [{
 
 // Angular Material Components
 import {
-  MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule,
-  MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule
+  MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule, MatTabsModule,
+  MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
+  MatFormFieldModule
 } from '@angular/material';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
 import { RootAppComponent } from './app.component';
+import {
+  LoginComponent,
+  HomeComponent
+} from './components/_index.component';
 
 // Helpers
 import {
@@ -39,16 +44,18 @@ import {
 
 @NgModule({
   declarations: [
-    RootAppComponent
+    RootAppComponent,
+    LoginComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase, 'collatask-firebase-config'),
     AppRoutingModule,
-    FormsModule,
+    FormsModule, ReactiveFormsModule,
     MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule,
-    MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule,
+    MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, MatTabsModule, MatFormFieldModule,
     HttpClientModule,
     FlexLayoutModule.withConfig({ useColumnBasisZero: false })
   ],
@@ -57,7 +64,8 @@ import {
     LocalStorageService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true }
+    { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true },
+    { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],
   bootstrap: [RootAppComponent]
 })
