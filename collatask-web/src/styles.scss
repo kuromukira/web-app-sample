@@ -1,1 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.collatask-no-margin {
+    margin: 0% !important;
+}
+
+.collatask-content-padding {
+    padding: 16px;
+}
+
+.collatask-default-bg {
+    background-color: lightgray !important;
+}
