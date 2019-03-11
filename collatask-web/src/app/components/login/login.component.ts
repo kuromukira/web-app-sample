@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/_index.service';
-import { PasswordErrorStateMatcher } from 'src/app/helpers/error-state/error-state.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PasswordErrorStateMatcher } from 'src/app/helpers/error-state/error-state.service';
 
 /*
     * LoginComponent mostly uses Promise<T>

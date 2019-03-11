@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import * as keys from '../local-storage-service/storage-keys';
-import { AuthServiceReturn } from 'src/app/models/_index.model';
+import { AuthServiceReturn } from 'src/app/models/auth-service.model';
 import { LocalStorageService, StorageModel } from '../local-storage-service/local-storage.service';
 
 @Injectable()
