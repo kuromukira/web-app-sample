@@ -39,7 +39,8 @@ import {
 // Services
 import {
   AuthService,
-  LocalStorageService
+  LocalStorageService,
+  TodoService
 } from './services/_index.service';
 
 @NgModule({
@@ -62,6 +63,7 @@ import {
   providers: [
     AuthService,
     LocalStorageService,
+    TodoService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true },
