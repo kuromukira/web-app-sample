@@ -31,17 +31,21 @@ export class AuthService {
         } catch (error) { return null; }
     }
 
+    private preserveLoginAuth(userCreds: firebase.auth.UserCredential) {
+        // Save the token returned by firsebase in local storage once firebase detected a change on auth state
+        this.fb.auth.onAuthStateChanged(async (user) => {
+            user.getIdToken().then((token) => {
+                this.ls.save(new StorageModel(keys.AccessTokenStorageKey, token));
+                this.ls.save(new StorageModel(keys.LoginCredentialsStorageKey, JSON.stringify(userCreds)));
+            });
+        });
+    }
+
     async signIn(email: string, password: string) {
         try {
             const _userAuth = await this.fb.auth.signInWithEmailAndPassword(email, password);
             if (_userAuth.user.emailVerified) {
-                // Save the token returned by firsebase in local storage once firebase detected a change on auth state
-                this.fb.auth.onAuthStateChanged(async (user) => {
-                    user.getIdToken().then((token) => {
-                        this.ls.save(new StorageModel(keys.AccessTokenStorageKey, token));
-                        this.ls.save(new StorageModel(keys.LoginCredentialsStorageKey, JSON.stringify(_userAuth)));
-                    });
-                });
+                this.preserveLoginAuth(_userAuth);
                 return new AuthServiceReturn(true, 'Welcome ' + email, _userAuth.user);
             }
             else return new AuthServiceReturn(true, 'Please verify your email address. A verification link has been sent to ' + email, null);
@@ -65,6 +69,7 @@ export class AuthService {
     async signInGoogle() {
         try {
             const _googleUser = await this.fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+            this.preserveLoginAuth(_googleUser);
             return new AuthServiceReturn(true, 'Welcome ' + _googleUser.user.email, _googleUser.user);
         }
         catch (error) {
