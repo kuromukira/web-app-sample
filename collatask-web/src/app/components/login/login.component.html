@@ -79,8 +79,14 @@
                                         <mat-form-field fxFlexFill>
                                             <input type="password" matInput required placeholder="Password"
                                                 formControlName="newPassword" [readonly]="isInProgress" minlength="6">
-                                            <mat-hint>Password must be at least <strong>6 characters long</strong>
-                                            </mat-hint>
+                                            <mat-error
+                                                *ngIf="registerFormGroup.controls['passwordField'].controls['newPassword'].hasError('minlength')">
+                                                Password must be at least <strong>6 characters long</strong>
+                                            </mat-error>
+                                            <mat-error
+                                                *ngIf="registerFormGroup.controls['passwordField'].controls['newPassword'].hasError('required')">
+                                                Password is <strong>required</strong>
+                                            </mat-error>
                                             <mat-icon matSuffix>lock_outline</mat-icon>
                                         </mat-form-field>
                                         <mat-form-field fxFlexFill>
@@ -88,46 +94,13 @@
                                                 formControlName="confirmPassword" [readonly]="isInProgress"
                                                 [errorStateMatcher]="passwordErrorMatcher">
                                             <mat-error
-                                                *ngIf="registerFormGroup.controls['passwordField'].controls['confirmPassword'].hasError('notSame')">
+                                                *ngIf="registerFormGroup.controls['passwordField'].hasError('notSame')">
                                                 Password <strong>does not match</strong>
                                             </mat-error>
                                             <mat-icon matSuffix>check</mat-icon>
                                         </mat-form-field>
                                     </div>
                                 </form>
-
-                                <!-- <mat-form-field fxFlexFill>
-                                    <input matInput required placeholder="Email"
-                                        [formControl]="registerFormGroup.emailAddress" [readonly]="isInProgress">
-                                    <mat-icon matSuffix>email</mat-icon>
-                                    <mat-error
-                                        *ngIf="registerFormGroup.emailAddress.hasError('email') && !registerFormGroup.emailAddress.hasError('required')">
-                                        Please enter a valid <strong>email address</strong>
-                                    </mat-error>
-                                    <mat-error *ngIf="registerFormGroup.emailAddress.hasError('required')">
-                                        Email is <strong>required</strong>
-                                    </mat-error>
-                                </mat-form-field>
-                                <form [formGroup]="registerFormGroup.passwordField" fxFlexFill>
-                                    <div fxFlexFill fxLayoutGap="3%" fxLayout="column">
-                                        <mat-form-field>
-                                            <input type="password" matInput placeholder="Password" minlength="6"
-                                                formControlName="newPassword" [readonly]="isInProgress">
-                                            <mat-icon matSuffix>lock_outline</mat-icon>
-                                            <mat-hint>Password must be at least <strong>6 characters long</strong>
-                                            </mat-hint>
-                                        </mat-form-field>
-                                        <mat-form-field>
-                                            <input type="password" matInput placeholder="Confirm Password"
-                                                formControlName="confirmPassword" [readonly]="isInProgress"
-                                                [errorStateMatcher]="passwordErrorMatcher">
-                                            <mat-icon matSuffix>check</mat-icon>
-                                            <mat-error *ngIf="registerFormGroup.passwordField.hasError('notSame')">
-                                                Password <strong>does not match</strong>
-                                            </mat-error>
-                                        </mat-form-field>
-                                    </div>
-                                </form> -->
                             </div>
                         </section>
                         <footer fxLayoutAlign="end center" fxLayoutGap="1%">
