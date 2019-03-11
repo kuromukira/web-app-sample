@@ -7,7 +7,7 @@
 export const environment = {
   production: false,
 
-  fireabse: {
+  firebase: {
     apiKey: "AIzaSyD6SL31rc5U9RmpDsbpZ7sc5D3Z_mLTDV4",
     authDomain: "collatask.firebaseapp.com",
     databaseURL: "https://collatask.firebaseio.com",
