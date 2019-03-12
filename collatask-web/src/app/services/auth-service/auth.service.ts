@@ -95,7 +95,7 @@ export class AuthService {
             await this.fb.auth.signOut();
             this.ls.delete(keys.LoginCredentialsStorageKey);
             this.ls.delete(keys.AccessTokenStorageKey);
-            return new AuthServiceReturn(true, '', null);
+            return new AuthServiceReturn(true, 'Goodbye!', null);
         }
         catch (error) {
             return new AuthServiceReturn(false, error.message, error);

@@ -19,7 +19,7 @@ const PRINT_BREAKPOINTS = [{
 import {
   MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule, MatTabsModule,
   MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
-  MatFormFieldModule
+  MatFormFieldModule, MatMenuModule
 } from '@angular/material';
 
 // Components
@@ -27,6 +27,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { RootAppComponent } from './app.component';
 import {
   LoginComponent,
+  DialogComponent,
+  PromptDialogComponent,
   HomeComponent
 } from './components/_index.component';
 
@@ -47,6 +49,7 @@ import {
   declarations: [
     RootAppComponent,
     LoginComponent,
+    PromptDialogComponent,
     HomeComponent
   ],
   imports: [
@@ -55,12 +58,14 @@ import {
     AngularFireModule.initializeApp(environment.firebase, 'collatask-firebase-config'),
     AppRoutingModule,
     FormsModule, ReactiveFormsModule,
-    MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule,
-    MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, MatTabsModule, MatFormFieldModule,
+    MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule,
+    MatSelectModule, MatOptionModule, MatCardModule, MatDialogModule, MatToolbarModule,
+    MatProgressBarModule, MatSnackBarModule, MatTabsModule, MatFormFieldModule, MatMenuModule,
     HttpClientModule,
     FlexLayoutModule.withConfig({ useColumnBasisZero: false })
   ],
   providers: [
+    DialogComponent,
     AuthService,
     LocalStorageService,
     TodoService,
@@ -69,6 +74,7 @@ import {
     { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],
+  entryComponents: [PromptDialogComponent],
   bootstrap: [RootAppComponent]
 })
 export class AppModule { }
