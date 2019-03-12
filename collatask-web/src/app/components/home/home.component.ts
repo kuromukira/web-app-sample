@@ -71,11 +71,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     btnRemove_Clicked(id: string) {
-        alert(id);
+        this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to remove selected to-do?', null))
+            .afterClosed().subscribe(result => {
+                if (result) {
+                    this.todoService.remove(id).then(result => {
+                        if (result.success)
+                            this.btnRefresh_Clicked();
+                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                    });
+                }
+            });
     }
 
     btnComplete_Clicked(id: string) {
-        alert(id);
+        this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to complete selected to-do?', null))
+            .afterClosed().subscribe(result => {
+                if (result) {
+                    this.todoService.complete(id).then(result => {
+                        if (result.success)
+                            this.btnRefresh_Clicked();
+                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                    });
+                }
+            });
     }
 
 }

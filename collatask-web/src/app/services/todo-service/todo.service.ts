@@ -21,7 +21,7 @@ export class TodoService {
 
     constructor(private http: HttpClient) {
         // Test data only
-        for (var i = 0; i < 100; i++) {
+        for (var i = 0; i < 50; i++) {
             let _todo = new TodoModel();
             _todo.todoId = Guid.create().toString();
             _todo.description = "Todo # " + (i + 1).toString();
@@ -99,10 +99,8 @@ export class TodoService {
             this.$_inProgress.next(true);
             // make http request here
             for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === todo.todoId) {
+                if (_todo.todoId === todo.todoId)
                     _todo.description = todo.description;
-                    _todo.isCompleted = todo.isCompleted;
-                }
             }
             // finally
             this.$_inProgress.next(false);
@@ -123,6 +121,23 @@ export class TodoService {
                     _index = this.lTestTodos.indexOf(_todo);
             }
             this.lTestTodos.splice(_index, 1);
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async complete(id: string) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === id)
+                    _todo.isCompleted = true;
+            }
             // finally
             this.$_inProgress.next(false);
             return new ServiceReturn(true, '', null);
@@ -199,10 +214,8 @@ export class TodoService {
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === sub.parentTodoId) {
                     for (let _subTodo of _todo.sub) {
-                        if (_subTodo.todoId === sub.todoId) {
+                        if (_subTodo.todoId === sub.todoId)
                             _subTodo.description = sub.description;
-                            _subTodo.isCompleted = sub.isCompleted;
-                        }
                     }
                 }
             }
@@ -227,6 +240,27 @@ export class TodoService {
                             _index = _todo.sub.indexOf(_subTodo);
                     }
                     _todo.sub.splice(_index, 1);
+                }
+            }
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async completeSub(parentId: string, subId: string) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === parentId) {
+                    for (let _subTodo of _todo.sub) {
+                        if (_subTodo.todoId === subId)
+                            _subTodo.isCompleted = true;
+                    }
                 }
             }
             // finally
