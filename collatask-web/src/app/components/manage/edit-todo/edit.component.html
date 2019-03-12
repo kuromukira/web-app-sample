@@ -1,5 +1,5 @@
 <h1 mat-dialog-title>Edit</h1>
-<div mat-dialog-content fxLayout="column">
+<div mat-dialog-content fxLayout="column" fxLayoutGap="3%">
     <form [formGroup]="editForm" fxLayout="column" fxLayoutGap="3%" fxFlexFill>
         <mat-form-field fxFlexFill>
             <input matInput required placeholder="Description" formControlName="description" [readonly]="inProgress">
@@ -14,6 +14,7 @@
             </mat-error>
         </mat-form-field>
     </form>
+    <sub-todo></sub-todo>
 </div>
 <div mat-dialog-actions fxLayoutAlign="end center" fxLayoutGap="1%">
     <button mat-button [disabled]="inProgress" color="warn" (click)="onNoClick()">Cancel</button>

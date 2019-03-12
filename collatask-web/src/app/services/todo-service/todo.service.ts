@@ -21,13 +21,23 @@ export class TodoService {
 
     constructor(private http: HttpClient) {
         // Test data only
-        for (var i = 0; i < 50; i++) {
+        for (var i = 0; i < 20; i++) {
             let _todo = new TodoModel();
             _todo.todoId = Guid.create().toString();
             _todo.description = "Todo # " + (i + 1).toString();
             _todo.addedBy = "norgelera@outlook.com";
             _todo.dateAdded = new Date();
             _todo.isCompleted = false;
+
+            let _subTodo = new TodoModel();
+            _subTodo.todoId = Guid.create().toString();
+            _subTodo.description = "Sub Todo # 1";
+            _subTodo.addedBy = "norgelera@outlook.com";
+            _subTodo.dateAdded = new Date();
+            _subTodo.parentTodoId = _todo.todoId;
+            _subTodo.isCompleted = false;
+
+            _todo.sub.push(_subTodo)
             this.lTestTodos.push(_todo);
         }
     }

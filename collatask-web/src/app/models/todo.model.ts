@@ -5,5 +5,5 @@ export class TodoModel {
     addedBy: string; // email address
     isCompleted: boolean;
     dateAdded: Date;
-    sub: TodoModel[];
+    sub: TodoModel[] = [];
 }

@@ -54,7 +54,10 @@ export class HomeComponent implements OnInit, OnDestroy {
     btnInfo_Clicked(id: string) {
         const _dialog = this.dialog.open(EditTodoComponent, { width: '450px', data: id, disableClose: true });
         _dialog.afterOpened().subscribe(() => {
-            this.todoService.get(id);
+            this.todoService.get(id).then(result => {
+                if (result.success)
+                    this.todoService.getSubOf(id);
+            });
         });
         _dialog.afterClosed().subscribe(result => {
             if (result)

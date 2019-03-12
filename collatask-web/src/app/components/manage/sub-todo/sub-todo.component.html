@@ -1,0 +1,47 @@
+<div fxLayout="column" fxFlexFill>
+    <h4>Sub To-Do</h4>
+    <form [formGroup]="subTodoForm" fxLayout="row" fxLayoutGap="2%" fxLayoutAlign="start center">
+        <mat-form-field fxFlex="80">
+            <input matInput required placeholder="Description" formControlName="description" [readonly]="inProgress">
+            <mat-error *ngIf="subTodoForm.controls['description'].hasError('required')">
+                Sub To-Do Description is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <div fxLayout="row" fxFlex="20" fxLayoutAlign="end center">
+            <button mat-icon-button color="warn" [disabled]="inProgress" (click)="btnClear_Clicked()">
+                <mat-icon>close</mat-icon>
+            </button>
+            <button mat-icon-button color="primary" [disabled]="inProgress" (click)="btnSave_Clicked()">
+                <mat-icon>save</mat-icon>
+            </button>
+        </div>
+    </form>
+    <mat-table [dataSource]="lSubTodos" class="collatask-subtodo-table-height mat-elevation-z8">
+
+        <!-- Description Column -->
+        <ng-container matColumnDef="description">
+            <mat-header-cell *matHeaderCellDef> Sub To-Do </mat-header-cell>
+            <mat-cell *matCellDef="let row" matTooltip="Added by {{ row.addedBy }}"> {{ row.description }} </mat-cell>
+        </ng-container>
+
+        <!-- Controls -->
+        <ng-container matColumnDef="controls">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let row" fxLayoutGap="1%" fxLayout.xs="column" fxLayoutAlign="end center">
+                <button mat-icon-button color="accent" [disabled]="inProgress" (click)="btnEditSub_Clicked(row.todoId)">
+                    <mat-icon>information</mat-icon>
+                </button>
+                <button mat-icon-button color="warn" [disabled]="inProgress" (click)="btnRemoveSub_Clicked(row.todoId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" [disabled]="inProgress"
+                    (click)="btnCompleteSub_Clicked(row.todoId)">
+                    <mat-icon>done</mat-icon>
+                </button>
+            </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    </mat-table>
+</div>

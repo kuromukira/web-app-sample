@@ -19,7 +19,7 @@ const PRINT_BREAKPOINTS = [{
 import {
   MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule, MatTabsModule,
   MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
-  MatFormFieldModule, MatMenuModule
+  MatFormFieldModule, MatMenuModule, MatTooltipModule
 } from '@angular/material';
 
 // Components
@@ -31,7 +31,8 @@ import {
   PromptDialogComponent,
   HomeComponent,
   AddTodoComponent,
-  EditTodoComponent
+  EditTodoComponent,
+  SubTodoComponent
 } from './components/_index.component';
 
 // Helpers
@@ -54,7 +55,8 @@ import {
     PromptDialogComponent,
     HomeComponent,
     AddTodoComponent,
-    EditTodoComponent
+    EditTodoComponent,
+    SubTodoComponent
   ],
   imports: [
     BrowserModule,
@@ -65,6 +67,7 @@ import {
     MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule,
     MatSelectModule, MatOptionModule, MatCardModule, MatDialogModule, MatToolbarModule,
     MatProgressBarModule, MatSnackBarModule, MatTabsModule, MatFormFieldModule, MatMenuModule,
+    MatTooltipModule,
     HttpClientModule,
     FlexLayoutModule.withConfig({ useColumnBasisZero: false })
   ],
