@@ -27,13 +27,22 @@ export class AuthService {
         } catch (error) { return null; }
     }
 
+    getUserEmail() {
+        try {
+            let _model: StorageModel = this.ls.get(keys.LoginCredentialsStorageKey);
+            let _userCred: firebase.auth.UserCredential = JSON.parse(_model.data);
+            return _userCred.user.email;
+        } catch (error) { return null; }
+    }
+
     private preserveLoginAuth(userCreds: firebase.auth.UserCredential) {
         // Save the token returned by firsebase in local storage once firebase detected a change on auth state
         this.fb.auth.onAuthStateChanged(async (user) => {
-            user.getIdToken().then((token) => {
-                this.ls.save(new StorageModel(keys.AccessTokenStorageKey, token));
-                this.ls.save(new StorageModel(keys.LoginCredentialsStorageKey, JSON.stringify(userCreds)));
-            });
+            if (user !== null)
+                user.getIdToken().then((token) => {
+                    this.ls.save(new StorageModel(keys.AccessTokenStorageKey, token));
+                    this.ls.save(new StorageModel(keys.LoginCredentialsStorageKey, JSON.stringify(userCreds)));
+                });
         });
     }
 

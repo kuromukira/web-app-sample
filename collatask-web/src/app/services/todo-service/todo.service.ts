@@ -82,6 +82,8 @@ export class TodoService {
         try {
             this.$_inProgress.next(true);
             // make http request here
+            todo.todoId = Guid.create().toString();
+            todo.dateAdded = new Date();
             this.lTestTodos.push(todo);
             // finally
             this.$_inProgress.next(false);
@@ -175,8 +177,11 @@ export class TodoService {
             this.$_inProgress.next(true);
             // make http request here
             for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === sub.parentTodoId)
+                if (_todo.todoId === sub.parentTodoId) {
+                    sub.todoId = Guid.create().toString();
+                    sub.dateAdded = new Date();
                     _todo.sub.push(sub);
+                }
             }
             // finally
             this.$_inProgress.next(false);
