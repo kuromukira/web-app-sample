@@ -1,1 +1,49 @@
-Hello, I am the Home page
+<mat-toolbar color="primary" class="collatask-toolbar-fixed mat-elevation-z2">
+    <mat-toolbar-row>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="20">
+            <h1> <strong>Collab</strong>Task </h1>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%" fxFlex>
+            <button mat-icon-button [matMenuTriggerFor]="menu">
+                <mat-icon>menu</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+                <button mat-menu-item>
+                    <mat-icon>add</mat-icon>
+                    <span>New To-Do</span>
+                </button>
+                <button mat-menu-item (click)="btnRefresh_Clicked()">
+                    <mat-icon>refresh</mat-icon>
+                    <span>Refresh</span>
+                </button>
+                <button mat-menu-item (click)="btnSignOut_Clicked()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Sign Out</span>
+                </button>
+            </mat-menu>
+        </div>
+    </mat-toolbar-row>
+    <mat-progress-bar color="accent" *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
+</mat-toolbar>
+<section fxLayoutAlign="center center" class="collatask-content-padding">
+    <div fxLayout="column" fxFlex="40" fxFlex.md="50" fxFlex.sm="70" fxFlex.xs="100" fxLayoutGap="2%">
+        <mat-card *ngFor="let todo of lTodos">
+            <mat-card-header>
+                <mat-card-title>{{ todo.description }}</mat-card-title>
+                <mat-card-subtitle>{{ todo.todoId }}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="1%">
+                <button mat-icon-button [disabled]="inProgress" color="accent" (click)="btnInfo_Clicked(todo.todoId)">
+                    <mat-icon>information</mat-icon>
+                </button>
+                <button mat-icon-button [disabled]="inProgress" color="warn" (click)="btnRemove_Clicked(todo.todoId)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button [disabled]="inProgress" color="primary"
+                    (click)="btnComplete_Clicked(todo.todoId)">
+                    <mat-icon>done</mat-icon>
+                </button>
+            </mat-card-actions>
+        </mat-card>
+    </div>
+</section>

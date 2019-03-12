@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
 import { AuthService } from 'src/app/services/_index.service';
-import { PasswordErrorStateMatcher } from 'src/app/helpers/error-state/error-state.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { PasswordErrorStateMatcher } from 'src/app/helpers/error-state/error-state.service';
 
 /*
     * LoginComponent mostly uses Promise<T>
@@ -34,14 +34,14 @@ export class LoginComponent implements OnInit {
         passwordField: new FormGroup({
             newPassword: new FormControl('', [Validators.required]),
             confirmPassword: new FormControl('')
-        }, { validators: this.checkPasswords })
+        }, {
+                validators: (group: FormGroup) => {
+                    let pass = group.controls.newPassword.value;
+                    let confirmPass = group.controls.confirmPassword.value;
+                    return pass === confirmPass ? null : { notSame: true }
+                }
+            })
     });
-
-    checkPasswords(group: FormGroup) {
-        let pass = group.controls.newPassword.value;
-        let confirmPass = group.controls.confirmPassword.value;
-        return pass === confirmPass ? null : { notSame: true }
-    }
     // #endregion
 
     constructor(
@@ -70,8 +70,7 @@ export class LoginComponent implements OnInit {
                     if (result.success)
                         this.router.navigate([this.targetUrl]);
                     else this.snackbar.open(result.message, null, { duration: 4000 });
-                })
-                .finally(() => { this.isInProgress = false; })
+                }).finally(() => this.isInProgress = false)
         }
         else this.snackbar.open("There are empty or invalid fields.", null, { duration: 4000 });
     }
@@ -82,7 +81,7 @@ export class LoginComponent implements OnInit {
             if (result.success)
                 this.router.navigate([this.targetUrl]);
             else this.snackbar.open(result.message, null, { duration: 4000 });
-        }).finally(() => { this.isInProgress = false; })
+        }).finally(() => this.isInProgress = false)
     }
 
     btnForgotPass_Clicked() {
@@ -91,7 +90,7 @@ export class LoginComponent implements OnInit {
             this.authService.forgotPassword(this.loginFormGroup.controls.emailAddress.value, 'EMAIL')
                 .then((result) => {
                     this.snackbar.open(result.message, null, { duration: 4000 });
-                }).finally(() => { this.isInProgress = false; })
+                }).finally(() => this.isInProgress = false)
         }
         else this.snackbar.open("There are empty or invalid fields.", null, { duration: 4000 });
     }
