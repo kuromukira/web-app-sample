@@ -10,7 +10,7 @@ import { Guid } from 'guid-typescript';
 const API_URL: string = 'https://localhost:5001/';
 
 /**
- * ! Added setInterval to simulate 1 second http request
+ * ! Changes inside this service will not affect the UI as long as there are no changes to the parameters
  */
 
 @Injectable()
