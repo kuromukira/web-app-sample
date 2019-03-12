@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { TodoModel } from 'src/app/models/todo.model';
-import { BehaviorSubject, ObjectUnsubscribedError } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
+import { ServiceReturn } from 'src/app/models/service.model';
 
 import { Guid } from 'guid-typescript';
 
@@ -9,7 +10,7 @@ import { Guid } from 'guid-typescript';
 const API_URL: string = 'https://localhost:5001/';
 
 /**
- * ! Added setInterval to simulate 1 second http request
+ * ! Changes inside this service will not affect the UI as long as there are no changes to the parameters
  */
 
 @Injectable()
@@ -20,14 +21,11 @@ export class TodoService {
 
     constructor(private http: HttpClient) {
         // Test data only
-        let _addedBy: string = Guid.create().toString();
-        for (var i = 0; i < 100; i++) {
-            if (i % 5 === 0)
-                _addedBy = Guid.create().toString();
+        for (var i = 0; i < 50; i++) {
             let _todo = new TodoModel();
             _todo.todoId = Guid.create().toString();
             _todo.description = "Todo # " + (i + 1).toString();
-            _todo.addedBy = _addedBy;
+            _todo.addedBy = "norgelera@outlook.com";
             _todo.dateAdded = new Date();
             _todo.isCompleted = false;
             this.lTestTodos.push(_todo);
@@ -50,55 +48,73 @@ export class TodoService {
     // !================================================================ TODOS ===============================================================
 
     async get(id: string) {
-        this.$_inProgress.next(true);
-        // make http request here
-        for (let _todo of this.lTestTodos) {
-            if (_todo.todoId === id)
-                this.$_todo.next(Object.assign({}, _todo));
-        }
-        // finally
-        this.$_inProgress.next(false);
-    }
-
-    async getAll() {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
-            this.$_todos.next(Object.assign([], this.lTestTodos));
-            // finally
-            this.$_inProgress.next(false);
-        }, 1000);
-    }
-
-    async add(todo: TodoModel) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
-            this.lTestTodos.push(todo);
-            // finally
-            this.$_inProgress.next(false);
-        }, 1000);
-    }
-
-    async modify(todo: TodoModel) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === todo.todoId) {
-                    _todo.description = todo.description;
-                    _todo.isCompleted = todo.isCompleted;
-                }
+                if (_todo.todoId === id)
+                    this.$_todo.next(Object.assign({}, _todo));
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async getAll() {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            this.$_todos.next(Object.assign([], this.lTestTodos.filter((data) => { return !data.isCompleted; })));
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async add(todo: TodoModel) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            todo.todoId = Guid.create().toString();
+            todo.dateAdded = new Date();
+            this.lTestTodos.push(todo);
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async modify(todo: TodoModel) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === todo.todoId)
+                    _todo.description = todo.description;
+            }
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     async remove(id: string) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             let _index: number;
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === id)
@@ -107,28 +123,53 @@ export class TodoService {
             this.lTestTodos.splice(_index, 1);
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async complete(id: string) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === id)
+                    _todo.isCompleted = true;
+            }
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     // !============================================================== SUB TODOS =============================================================
 
     async getSubOf(parentId: string) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === parentId)
-                    this.$_subTodos.next(Object.assign([], _todo.sub));
+                    this.$_subTodos.next(Object.assign([], _todo.sub.filter((data) => { return !data.isCompleted; })));
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     async getSub(parentId: string, id: string) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === parentId) {
                     for (let _subTodo of _todo.sub) {
@@ -139,45 +180,58 @@ export class TodoService {
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     async addSub(sub: TodoModel) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === sub.parentTodoId)
+                if (_todo.todoId === sub.parentTodoId) {
+                    sub.todoId = Guid.create().toString();
+                    sub.dateAdded = new Date();
                     _todo.sub.push(sub);
+                }
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     async modifySub(sub: TodoModel) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === sub.parentTodoId) {
                     for (let _subTodo of _todo.sub) {
-                        if (_subTodo.todoId === sub.todoId) {
+                        if (_subTodo.todoId === sub.todoId)
                             _subTodo.description = sub.description;
-                            _subTodo.isCompleted = sub.isCompleted;
-                        }
                     }
                 }
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
     async removeSub(parentId: string, subId: string) {
-        this.$_inProgress.next(true);
-        // make http request here
-        setTimeout(() => {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
             let _index: number;
             for (let _todo of this.lTestTodos) {
                 if (_todo.todoId === parentId) {
@@ -190,7 +244,32 @@ export class TodoService {
             }
             // finally
             this.$_inProgress.next(false);
-        }, 1000);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
+    }
+
+    async completeSub(parentId: string, subId: string) {
+        try {
+            this.$_inProgress.next(true);
+            // make http request here
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === parentId) {
+                    for (let _subTodo of _todo.sub) {
+                        if (_subTodo.todoId === subId)
+                            _subTodo.isCompleted = true;
+                    }
+                }
+            }
+            // finally
+            this.$_inProgress.next(false);
+            return new ServiceReturn(true, '', null);
+        }
+        catch (error) {
+            return new ServiceReturn(false, error.message, error);
+        }
     }
 
 }

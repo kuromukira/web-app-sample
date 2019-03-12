@@ -8,7 +8,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="btnAdd_Clicked()">
                     <mat-icon>add</mat-icon>
                     <span>New To-Do</span>
                 </button>
@@ -30,7 +30,7 @@
         <mat-card *ngFor="let todo of lTodos">
             <mat-card-header>
                 <mat-card-title>{{ todo.description }}</mat-card-title>
-                <mat-card-subtitle>{{ todo.todoId }}</mat-card-subtitle>
+                <mat-card-subtitle>Added By : {{ todo.addedBy }}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="1%">
                 <button mat-icon-button [disabled]="inProgress" color="accent" (click)="btnInfo_Clicked(todo.todoId)">

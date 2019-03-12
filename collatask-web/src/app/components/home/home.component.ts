@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TodoModel } from 'src/app/models/todo.model';
 import { TodoService, AuthService } from 'src/app/services/_index.service';
 import { DialogComponent, DialogData } from '../dialog/dialog.component';
+import { AddTodoComponent, EditTodoComponent } from '../manage/_manage.component';
 
 @Component({
     selector: 'app-home',
@@ -19,7 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy {
         private snackbar: MatSnackBar,
         private authService: AuthService,
         private todoService: TodoService,
-        private dialog: DialogComponent) { }
+        private dialog: MatDialog,
+        private customDialog: DialogComponent) { }
 
     ngOnInit() {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
@@ -32,7 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     btnSignOut_Clicked() {
-        this.dialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to leave?', null))
+        this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to leave?', null))
             .afterClosed().subscribe(result => {
                 if (result) {
                     this.inProgress = true;
@@ -50,15 +52,48 @@ export class HomeComponent implements OnInit, OnDestroy {
     }
 
     btnInfo_Clicked(id: string) {
-        alert(id);
+        const _dialog = this.dialog.open(EditTodoComponent, { width: '450px', data: id, disableClose: true });
+        _dialog.afterOpened().subscribe(() => {
+            this.todoService.get(id);
+        });
+        _dialog.afterClosed().subscribe(result => {
+            if (result)
+                this.btnRefresh_Clicked();
+        });
+    }
+
+    btnAdd_Clicked() {
+        this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
+            .afterClosed().subscribe(result => {
+                if (result)
+                    this.btnRefresh_Clicked();
+            });
     }
 
     btnRemove_Clicked(id: string) {
-        alert(id);
+        this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to remove selected to-do?', null))
+            .afterClosed().subscribe(result => {
+                if (result) {
+                    this.todoService.remove(id).then(result => {
+                        if (result.success)
+                            this.btnRefresh_Clicked();
+                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                    });
+                }
+            });
     }
 
     btnComplete_Clicked(id: string) {
-        alert(id);
+        this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to complete selected to-do?', null))
+            .afterClosed().subscribe(result => {
+                if (result) {
+                    this.todoService.complete(id).then(result => {
+                        if (result.success)
+                            this.btnRefresh_Clicked();
+                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                    });
+                }
+            });
     }
 
 }

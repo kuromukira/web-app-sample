@@ -1,4 +1,4 @@
-export class AuthServiceReturn {
+export class ServiceReturn {
     readonly success: boolean = false;
     readonly message: string = '';
     readonly data: any = null;
