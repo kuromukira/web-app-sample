@@ -52,12 +52,14 @@ export class TodoService {
     async get(id: string) {
         this.$_inProgress.next(true);
         // make http request here
-        for (let _todo of this.lTestTodos) {
-            if (_todo.todoId === id)
-                this.$_todo.next(Object.assign({}, _todo));
-        }
-        // finally
-        this.$_inProgress.next(false);
+        setTimeout(() => {
+            for (let _todo of this.lTestTodos) {
+                if (_todo.todoId === id)
+                    this.$_todo.next(Object.assign({}, _todo));
+            }
+            // finally
+            this.$_inProgress.next(false);
+        }, 1000);
     }
 
     async getAll() {
