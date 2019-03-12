@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { environment } from 'src/environments/environment';
 import * as keys from '../local-storage-service/storage-keys';
-import { AuthServiceReturn } from 'src/app/models/auth-service.model';
+import { ServiceReturn } from 'src/app/models/service.model';
 import { LocalStorageService, StorageModel } from '../local-storage-service/local-storage.service';
 
 @Injectable()
@@ -42,12 +42,12 @@ export class AuthService {
             const _userAuth = await this.fb.auth.signInWithEmailAndPassword(email, password);
             if (_userAuth.user.emailVerified) {
                 this.preserveLoginAuth(_userAuth);
-                return new AuthServiceReturn(true, 'Welcome ' + email, _userAuth.user);
+                return new ServiceReturn(true, 'Welcome ' + email, _userAuth.user);
             }
-            else return new AuthServiceReturn(false, 'Please verify your email address. A verification link has been sent to ' + email, null);
+            else return new ServiceReturn(false, 'Please verify your email address. A verification link has been sent to ' + email, null);
         }
         catch (error) {
-            return new AuthServiceReturn(false, error.message, error);
+            return new ServiceReturn(false, error.message, error);
         }
     }
 
@@ -55,10 +55,10 @@ export class AuthService {
         try {
             const _result = await this.fb.auth.createUserWithEmailAndPassword(email, password);
             _result.user.sendEmailVerification();
-            return new AuthServiceReturn(true, 'An email verification link has been sent to ' + email, _result.user);
+            return new ServiceReturn(true, 'An email verification link has been sent to ' + email, _result.user);
         }
         catch (error) {
-            return new AuthServiceReturn(false, error.message, error);
+            return new ServiceReturn(false, error.message, error);
         }
     }
 
@@ -66,22 +66,22 @@ export class AuthService {
         try {
             const _googleUser = await this.fb.auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
             this.preserveLoginAuth(_googleUser);
-            return new AuthServiceReturn(true, 'Welcome ' + _googleUser.user.email, _googleUser.user);
+            return new ServiceReturn(true, 'Welcome ' + _googleUser.user.email, _googleUser.user);
         }
         catch (error) {
-            return new AuthServiceReturn(false, error.message, error);
+            return new ServiceReturn(false, error.message, error);
         }
     }
 
     async forgotPassword(email: string, provider: string) {
         if (provider.toUpperCase() === 'GOOGLE')
-            return new AuthServiceReturn(false, 'Cannot process forgot password for GOOGLE accounts.', null);
+            return new ServiceReturn(false, 'Cannot process forgot password for GOOGLE accounts.', null);
         else {
             try {
                 await this.fb.auth.sendPasswordResetEmail(email);
-                return new AuthServiceReturn(true, "Password reset link has been sent to " + email, null);
+                return new ServiceReturn(true, "Password reset link has been sent to " + email, null);
             } catch (error) {
-                return new AuthServiceReturn(false, error.message, error);
+                return new ServiceReturn(false, error.message, error);
             }
         }
     }
@@ -91,10 +91,10 @@ export class AuthService {
             await this.fb.auth.signOut();
             this.ls.delete(keys.LoginCredentialsStorageKey);
             this.ls.delete(keys.AccessTokenStorageKey);
-            return new AuthServiceReturn(true, 'Goodbye!', null);
+            return new ServiceReturn(true, 'Goodbye!', null);
         }
         catch (error) {
-            return new AuthServiceReturn(false, error.message, error);
+            return new ServiceReturn(false, error.message, error);
         }
     }
 }
