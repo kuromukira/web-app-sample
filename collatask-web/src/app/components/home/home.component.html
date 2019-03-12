@@ -8,7 +8,7 @@
                 <mat-icon>menu</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-                <button mat-menu-item>
+                <button mat-menu-item (click)="btnAdd_Clicked()">
                     <mat-icon>add</mat-icon>
                     <span>New To-Do</span>
                 </button>
