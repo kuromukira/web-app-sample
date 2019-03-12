@@ -29,7 +29,9 @@ import {
   LoginComponent,
   DialogComponent,
   PromptDialogComponent,
-  HomeComponent
+  HomeComponent,
+  AddTodoComponent,
+  EditTodoComponent
 } from './components/_index.component';
 
 // Helpers
@@ -50,7 +52,9 @@ import {
     RootAppComponent,
     LoginComponent,
     PromptDialogComponent,
-    HomeComponent
+    HomeComponent,
+    AddTodoComponent,
+    EditTodoComponent
   ],
   imports: [
     BrowserModule,
@@ -74,7 +78,11 @@ import {
     { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true },
     { provide: ErrorStateMatcher, useClass: ShowOnDirtyErrorStateMatcher }
   ],
-  entryComponents: [PromptDialogComponent],
+  entryComponents: [
+    PromptDialogComponent,
+    AddTodoComponent,
+    EditTodoComponent
+  ],
   bootstrap: [RootAppComponent]
 })
 export class AppModule { }

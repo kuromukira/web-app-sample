@@ -1,0 +1,21 @@
+<h1 mat-dialog-title>Edit</h1>
+<div mat-dialog-content fxLayout="column">
+    <form [formGroup]="editForm" fxLayout="column" fxLayoutGap="3%" fxFlexFill>
+        <mat-form-field fxFlexFill>
+            <input matInput required placeholder="Description" formControlName="description" [readonly]="inProgress">
+            <mat-error *ngIf="editForm.controls['description'].hasError('required')">
+                Description is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field fxFlexFill>
+            <input matInput required placeholder="Added By" formControlName="addedBy" [readonly]="true">
+            <mat-error *ngIf="editForm.controls['addedBy'].hasError('required')">
+                Added By is <strong>required</strong>
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center" fxLayoutGap="1%">
+    <button mat-button [disabled]="inProgress" color="warn" (click)="onNoClick()">Cancel</button>
+    <button mat-button [disabled]="inProgress" color="primary" (click)="onYesClick()">Update</button>
+</div>
