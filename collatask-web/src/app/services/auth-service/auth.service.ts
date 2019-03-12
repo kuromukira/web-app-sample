@@ -17,17 +17,13 @@ export class AuthService {
         try {
             let _token: string = this.getUserToken();
             return typeof _token !== 'undefined' && _token;
-        } catch (error) {
-            return false;
-        }
+        } catch (error) { return false; }
     }
 
     getUserToken() {
         try {
             let _model: StorageModel = this.ls.get(keys.AccessTokenStorageKey);
-            if (_model.data === '' || _model.data === null || _model.data === undefined)
-                return null;
-            else return _model.data;
+            return (_model.data === '' || _model.data === null || _model.data === undefined) ? null : _model.data;
         } catch (error) { return null; }
     }
 
