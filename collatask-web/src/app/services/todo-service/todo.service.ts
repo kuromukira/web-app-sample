@@ -44,7 +44,6 @@ export class TodoService {
                 this.$_todo.next(Object.assign({}, result));
                 this.$_inProgress.next(false);
             });
-            return new ServiceReturn(true, '', null);
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -58,7 +57,6 @@ export class TodoService {
                 this.$_todos.next(Object.assign([], result));
                 this.$_inProgress.next(false);
             });
-            return new ServiceReturn(true, '', null);
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -115,7 +113,6 @@ export class TodoService {
                 this.$_subTodo.next(Object.assign({}, result));
                 this.$_inProgress.next(false);
             });
-            return new ServiceReturn(true, '', null);
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
