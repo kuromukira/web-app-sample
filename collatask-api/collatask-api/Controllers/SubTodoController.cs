@@ -10,17 +10,13 @@ namespace collatask_api.Controllers
     /// <summary></summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class TodoController : ControllerBase
+    public class SubTodoController : Controller
     {
-        private ITodoRepository TodoRepository { get; }
+        /// <summary></summary>
         private ISubTodoRepository SubTodoRepository { get; }
 
         /// <summary></summary>
-        public TodoController(ITodoRepository todo, ISubTodoRepository subtodo)
-        {
-            TodoRepository = todo;
-            SubTodoRepository = subtodo;
-        }
+        public SubTodoController(ISubTodoRepository repository) => SubTodoRepository = repository;
 
         /// <summary></summary>
         [Authorize]
@@ -30,9 +26,7 @@ namespace collatask_api.Controllers
         {
             try
             {
-                TodoModel _todo = TodoRepository.Get(Guid.Parse(id));
-                _todo.Sub = SubTodoRepository.GetSubOf(_todo.TodoId);
-                return Ok(_todo);
+                return Ok(SubTodoRepository.Get(Guid.Parse(id)));
             }
             catch (Exception ex)
             {
@@ -48,7 +42,23 @@ namespace collatask_api.Controllers
         {
             try
             {
-                return Ok(TodoRepository.GetAll());
+                return Ok(SubTodoRepository.GetAll());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        /// <summary></summary>
+        [Authorize]
+        [HttpGet]
+        [Route("getsubof")]
+        public IActionResult GetSubOf(string parentId)
+        {
+            try
+            {
+                return Ok(SubTodoRepository.GetSubOf(parentId));
             }
             catch (Exception ex)
             {
@@ -64,8 +74,8 @@ namespace collatask_api.Controllers
         {
             try
             {
-                TodoRepository.Add(todo);
-                await TodoRepository.Commit();
+                SubTodoRepository.Add(todo);
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)
@@ -82,8 +92,8 @@ namespace collatask_api.Controllers
         {
             try
             {
-                TodoRepository.Modify(todo);
-                await TodoRepository.Commit();
+                SubTodoRepository.Modify(todo);
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)
@@ -100,8 +110,8 @@ namespace collatask_api.Controllers
         {
             try
             {
-                TodoRepository.Complete(Guid.Parse(id));
-                await TodoRepository.Commit();
+                SubTodoRepository.Complete(Guid.Parse(id));
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)
@@ -118,8 +128,8 @@ namespace collatask_api.Controllers
         {
             try
             {
-                TodoRepository.Remove(Guid.Parse(id));
-                await TodoRepository.Commit();
+                SubTodoRepository.Remove(Guid.Parse(id));
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)

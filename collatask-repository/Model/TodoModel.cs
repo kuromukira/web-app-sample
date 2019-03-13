@@ -1,4 +1,5 @@
 ﻿using LiteDB;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,6 +10,7 @@ namespace collatask_repository.Model
     public class TodoModel
     {
         [BsonId]
+        [JsonIgnore]
         /// <summary></summary>
         public Guid _id { get; set; }
 

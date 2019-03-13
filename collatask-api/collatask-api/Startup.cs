@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using collatask_repository.Interface;
+using collatask_repository.Repository;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -36,7 +38,7 @@ namespace collatask_api
 
             services.AddSwaggerGen(options =>
             {
-                options.SwaggerDoc("v1", new Info { Title = "CollaTask API", Version = "1.0.0" });
+                options.SwaggerDoc("v1", new Info { Title = "API", Version = "1.0.0" });
                 // Set the comments path for the Swagger JSON and UI.
                 options.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{Assembly.GetExecutingAssembly().GetName().Name}.xml"));
             });
@@ -56,7 +58,10 @@ namespace collatask_api
                 });
 
             #region DEPENDENCY INJECTION
+            const string LiteDbLocation = "collatask.db";
 
+            services.AddScoped<ITodoRepository>(repo => new TodoRepository(LiteDbLocation));
+            services.AddScoped<ISubTodoRepository>(repo => new SubTodoRepository(LiteDbLocation));
             #endregion
         }
 
@@ -66,14 +71,8 @@ namespace collatask_api
             app.UseCors("CollaTaskCors");
 
             if (env.IsDevelopment())
-            {
                 app.UseDeveloperExceptionPage();
-            }
-            else
-            {
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+            else app.UseHsts();
 
             // Enable middleware to serve generated Swagger as a JSON endpoint.
             app.UseSwagger();
@@ -82,12 +81,11 @@ namespace collatask_api
             // specifying the Swagger JSON endpoint.
             app.UseSwaggerUI(options =>
             {
-                options.SwaggerEndpoint("/swagger/v1/swagger.json", "CollaTask API v1.0.0");
+                options.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1.0.0");
                 options.RoutePrefix = string.Empty;
             });
 
             app.UseAuthentication();
-
             app.UseHttpsRedirection();
             app.UseMvc();
         }
