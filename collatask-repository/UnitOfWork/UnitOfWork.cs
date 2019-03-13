@@ -59,6 +59,20 @@ namespace collatask_repository.UnitOfWork
             { throw ex; }
         }
 
+        public IList<T> GetAllBy(string field, object value)
+        {
+            try
+            {
+                using (LiteDatabase _liteDb = new LiteDatabase(LiteDBLocation))
+                {
+                    var _collection = _liteDb.GetCollection<T>(CollectionName);
+                    return _collection.IncludeAll().Find(Query.Where(field, dbField => dbField.Equals(value))).ToList();
+                }
+            }
+            catch (Exception ex)
+            { throw ex; }
+        }
+
         public async Task Commit()
         {
             try

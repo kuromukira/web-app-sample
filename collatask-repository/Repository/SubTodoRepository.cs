@@ -15,33 +15,56 @@ namespace collatask_repository.Repository
 
         void ISubTodoRepository.Add(TodoModel todo)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(todo.Description))
+                throw new NullReferenceException("Description is required.");
+            else if (string.IsNullOrWhiteSpace(todo.AddedBy))
+                throw new NullReferenceException("Added By is required.");
+            else if (string.IsNullOrWhiteSpace(todo.ParentTodoId))
+                throw new NullReferenceException("Parent Id is required.");
+            else
+            {
+                todo._id = Guid.NewGuid();
+                todo.TodoId = todo._id.ToString();
+                todo.DateAdded = DateTime.Now;
+                SubTodoUOW.Add(todo);
+            }
         }
 
         void ISubTodoRepository.Complete(Guid id)
         {
-            throw new NotImplementedException();
+            TodoModel _todo = SubTodoUOW.Get(id);
+            _todo.IsCompleted = true;
+            SubTodoUOW.Modify(_todo);
         }
 
         TodoModel ISubTodoRepository.Get(Guid id)
         {
-            throw new NotImplementedException();
+            return SubTodoUOW.Get(id);
+        }
+
+        IList<TodoModel> ISubTodoRepository.GetAll()
+        {
+            return SubTodoUOW.GetAll();
         }
 
         IList<TodoModel> ISubTodoRepository.GetSubOf(string parentId)
         {
-            throw new NotImplementedException();
+            TodoModel _staticModel = new TodoModel();
+            return SubTodoUOW.GetAllBy(nameof(_staticModel.ParentTodoId), parentId);
         }
 
         void ISubTodoRepository.Modify(TodoModel todo)
         {
-            throw new NotImplementedException();
+            if (string.IsNullOrWhiteSpace(todo.Description))
+                throw new NullReferenceException("Description is required.");
+            else if (string.IsNullOrWhiteSpace(todo.AddedBy))
+                throw new NullReferenceException("Added By is required.");
+            else if (string.IsNullOrWhiteSpace(todo.ParentTodoId))
+                throw new NullReferenceException("Parent Id is required.");
+            else SubTodoUOW.Modify(todo);
         }
 
-        void ISubTodoRepository.Remove(Guid id)
-        {
-            throw new NotImplementedException();
-        }
+        void ISubTodoRepository.Remove(Guid id) => SubTodoUOW.Remove(id);
 
         async Task ISubTodoRepository.Commit() => await SubTodoUOW.Commit();
 

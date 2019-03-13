@@ -23,6 +23,7 @@ namespace collatask_repository.Interface
         void Modify(TodoModel todo);
         void Remove(Guid id);
         void Complete(Guid id);
+        IList<TodoModel> GetAll();
         IList<TodoModel> GetSubOf(string parentId);
         TodoModel Get(Guid id);
         Task Commit();
