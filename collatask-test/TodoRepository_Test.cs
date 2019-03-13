@@ -8,7 +8,7 @@ using Xunit;
 
 namespace collatask_test
 {
-    public class CollaTask_Test
+    public class TodoRepository_Test
     {
         private string LiteDbLocation { get; } = "collatask_test.db";
         private string UserEmail { get; } = "norgelera@outlook.com";
