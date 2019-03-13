@@ -51,7 +51,11 @@ namespace collatask_repository.Repository
                 throw new NullReferenceException("Description is required.");
             else if (string.IsNullOrWhiteSpace(todo.AddedBy))
                 throw new NullReferenceException("Added By is required.");
-            else TodoUOW.Modify(todo);
+            else
+            {
+                todo._id = Guid.Parse(todo.TodoId);
+                TodoUOW.Modify(todo);
+            }
         }
 
         void ITodoRepository.Remove(Guid id) => TodoUOW.Remove(id);

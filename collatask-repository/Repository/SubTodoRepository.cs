@@ -61,7 +61,11 @@ namespace collatask_repository.Repository
                 throw new NullReferenceException("Added By is required.");
             else if (string.IsNullOrWhiteSpace(todo.ParentTodoId))
                 throw new NullReferenceException("Parent Id is required.");
-            else SubTodoUOW.Modify(todo);
+            else
+            {
+                todo._id = Guid.Parse(todo.TodoId);
+                SubTodoUOW.Modify(todo);
+            }
         }
 
         void ISubTodoRepository.Remove(Guid id) => SubTodoUOW.Remove(id);

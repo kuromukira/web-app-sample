@@ -54,48 +54,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     btnInfo_Clicked(id: string) {
         const _dialog = this.dialog.open(EditTodoComponent, { width: '450px', data: id, disableClose: true });
         _dialog.afterOpened().subscribe(() => {
-            this.todoService.get(id).then(result => {
-                if (result.success)
-                    this.todoService.getSubOf(id);
-            });
+            this.todoService.get(id);
         });
-        _dialog.afterClosed().subscribe(result => {
-            if (result)
-                this.btnRefresh_Clicked();
-        });
+        _dialog.afterClosed().subscribe(() => { });
     }
 
     btnAdd_Clicked() {
         this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
-            .afterClosed().subscribe(result => {
-                if (result)
-                    this.btnRefresh_Clicked();
-            });
+            .afterClosed().subscribe(() => { });
     }
 
     btnRemove_Clicked(id: string) {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to remove selected to-do?', null))
             .afterClosed().subscribe(result => {
-                if (result) {
-                    this.todoService.remove(id).then(result => {
-                        if (result.success)
-                            this.btnRefresh_Clicked();
-                        else this.snackbar.open(result.message, '', { duration: 4000 });
-                    });
-                }
+                if (result)
+                    this.todoService.remove(id);
             });
     }
 
     btnComplete_Clicked(id: string) {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to complete selected to-do?', null))
             .afterClosed().subscribe(result => {
-                if (result) {
-                    this.todoService.complete(id).then(result => {
-                        if (result.success)
-                            this.btnRefresh_Clicked();
-                        else this.snackbar.open(result.message, '', { duration: 4000 });
-                    });
-                }
+                if (result)
+                    this.todoService.complete(id);
             });
     }
 

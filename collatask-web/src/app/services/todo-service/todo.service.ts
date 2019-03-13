@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { TodoModel } from 'src/app/models/todo.model';
 import { BehaviorSubject } from 'rxjs';
 import { ServiceReturn } from 'src/app/models/service.model';
@@ -7,7 +7,7 @@ import { ServiceReturn } from 'src/app/models/service.model';
 import { Guid } from 'guid-typescript';
 
 // Change this per actual URL of API
-const API_URL: string = 'https://localhost:5001/';
+const API_URL: string = 'https://localhost:44311/';
 
 /**
  * ! Changes inside this service will not affect the UI as long as there are no changes to the parameters
@@ -19,28 +19,7 @@ export class TodoService {
     // Testing variables
     private lTestTodos: TodoModel[] = [];
 
-    constructor(private http: HttpClient) {
-        // Test data only
-        for (var i = 0; i < 20; i++) {
-            let _todo = new TodoModel();
-            _todo.todoId = Guid.create().toString();
-            _todo.description = "Todo # " + (i + 1).toString();
-            _todo.addedBy = "norgelera@outlook.com";
-            _todo.dateAdded = new Date();
-            _todo.isCompleted = false;
-
-            let _subTodo = new TodoModel();
-            _subTodo.todoId = Guid.create().toString();
-            _subTodo.description = "Sub Todo # 1";
-            _subTodo.addedBy = "norgelera@outlook.com";
-            _subTodo.dateAdded = new Date();
-            _subTodo.parentTodoId = _todo.todoId;
-            _subTodo.isCompleted = false;
-
-            _todo.sub.push(_subTodo)
-            this.lTestTodos.push(_todo);
-        }
-    }
+    constructor(private http: HttpClient) { }
 
     $_todos: BehaviorSubject<TodoModel[]> = new BehaviorSubject([]);
     $_subTodos: BehaviorSubject<TodoModel[]> = new BehaviorSubject([]);
@@ -60,13 +39,11 @@ export class TodoService {
     async get(id: string) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === id)
-                    this.$_todo.next(Object.assign({}, _todo));
-            }
-            // finally
-            this.$_inProgress.next(false);
+            const _httpParams = new HttpParams().set('id', id);
+            await this.http.get<any>(API_URL + 'api/Todo/get', { params: _httpParams }).subscribe(result => {
+                this.$_todo.next(Object.assign({}, result));
+                this.$_inProgress.next(false);
+            });
             return new ServiceReturn(true, '', null);
         }
         catch (error) {
@@ -77,10 +54,10 @@ export class TodoService {
     async getAll() {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            this.$_todos.next(Object.assign([], this.lTestTodos.filter((data) => { return !data.isCompleted; })));
-            // finally
-            this.$_inProgress.next(false);
+            await this.http.get<any>(API_URL + 'api/Todo/getall', {}).subscribe(result => {
+                this.$_todos.next(Object.assign([], result));
+                this.$_inProgress.next(false);
+            });
             return new ServiceReturn(true, '', null);
         }
         catch (error) {
@@ -91,13 +68,7 @@ export class TodoService {
     async add(todo: TodoModel) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            todo.todoId = Guid.create().toString();
-            todo.dateAdded = new Date();
-            this.lTestTodos.push(todo);
-            // finally
-            this.$_inProgress.next(false);
-            return new ServiceReturn(true, '', null);
+            await this.http.post<any>(API_URL + 'api/Todo/save', todo).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -107,14 +78,7 @@ export class TodoService {
     async modify(todo: TodoModel) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === todo.todoId)
-                    _todo.description = todo.description;
-            }
-            // finally
-            this.$_inProgress.next(false);
-            return new ServiceReturn(true, '', null);
+            await this.http.put<any>(API_URL + 'api/Todo/modify', todo).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -124,16 +88,7 @@ export class TodoService {
     async remove(id: string) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            let _index: number;
-            for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === id)
-                    _index = this.lTestTodos.indexOf(_todo);
-            }
-            this.lTestTodos.splice(_index, 1);
-            // finally
-            this.$_inProgress.next(false);
-            return new ServiceReturn(true, '', null);
+            await this.http.put<any>(API_URL + 'api/Todo/remove?id=' + id, {}).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -143,14 +98,7 @@ export class TodoService {
     async complete(id: string) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === id)
-                    _todo.isCompleted = true;
-            }
-            // finally
-            this.$_inProgress.next(false);
-            return new ServiceReturn(true, '', null);
+            await this.http.post<any>(API_URL + 'api/Todo/complete?id=' + id, {}).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -162,13 +110,11 @@ export class TodoService {
     async getSubOf(parentId: string) {
         try {
             this.$_inProgress.next(true);
-            // make http request here
-            for (let _todo of this.lTestTodos) {
-                if (_todo.todoId === parentId)
-                    this.$_subTodos.next(Object.assign([], _todo.sub.filter((data) => { return !data.isCompleted; })));
-            }
-            // finally
-            this.$_inProgress.next(false);
+            const _httpParams = new HttpParams().set('parentId', parentId);
+            await this.http.get<any>(API_URL + 'api/SubTodo/getsubof', { params: _httpParams }).subscribe(result => {
+                this.$_subTodo.next(Object.assign({}, result));
+                this.$_inProgress.next(false);
+            });
             return new ServiceReturn(true, '', null);
         }
         catch (error) {
