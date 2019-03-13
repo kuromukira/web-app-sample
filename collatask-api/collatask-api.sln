@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "collatask-api", "collatask-api\collatask-api.csproj", "{91D2C388-A174-4BB4-9B42-E13CF8558932}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "collatask-api", "collatask-api\collatask-api.csproj", "{91D2C388-A174-4BB4-9B42-E13CF8558932}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "collatask-repository", "..\collatask-repository\collatask-repository.csproj", "{D16670AE-E06C-4401-AF5F-D588300536E9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "collatask-test", "..\collatask-test\collatask-test.csproj", "{1B7E5172-BE7D-4104-8DFD-DE0B0B70D080}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{91D2C388-A174-4BB4-9B42-E13CF8558932}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91D2C388-A174-4BB4-9B42-E13CF8558932}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91D2C388-A174-4BB4-9B42-E13CF8558932}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D16670AE-E06C-4401-AF5F-D588300536E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16670AE-E06C-4401-AF5F-D588300536E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16670AE-E06C-4401-AF5F-D588300536E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16670AE-E06C-4401-AF5F-D588300536E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B7E5172-BE7D-4104-8DFD-DE0B0B70D080}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B7E5172-BE7D-4104-8DFD-DE0B0B70D080}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B7E5172-BE7D-4104-8DFD-DE0B0B70D080}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B7E5172-BE7D-4104-8DFD-DE0B0B70D080}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
