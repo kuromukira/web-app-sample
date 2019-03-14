@@ -1,4 +1,5 @@
-﻿using collatask_repository.Interface;
+﻿using collatask_api.TaskHub;
+using collatask_repository.Interface;
 using collatask_repository.Repository;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -33,8 +34,11 @@ namespace collatask_api
                 options.AddPolicy("CollaTaskCors", builder => builder
                     .WithOrigins("https://localhost:4200", "http://localhost:4200")
                     .AllowAnyHeader()
-                    .AllowAnyMethod());
+                    .AllowAnyMethod()
+                    .AllowCredentials());
             });
+
+            services.AddSignalR();
 
             services.AddSwaggerGen(options =>
             {
@@ -86,6 +90,12 @@ namespace collatask_api
             });
 
             app.UseAuthentication();
+
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/task-notif");
+            });
+
             app.UseHttpsRedirection();
             app.UseMvc();
         }

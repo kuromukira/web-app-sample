@@ -11,7 +11,7 @@ namespace collatask_api.Controllers
     /// <summary></summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class SubTodoController : Controller
+    public class SubTodoController : ControllerBase
     {
         /// <summary></summary>
         private ISubTodoRepository SubTodoRepository { get; }

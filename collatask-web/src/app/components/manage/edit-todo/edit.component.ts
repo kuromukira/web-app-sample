@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { TodoService } from 'src/app/services/_index.service';
+import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
 import { TodoModel } from 'src/app/models/todo.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
@@ -22,7 +22,9 @@ export class EditTodoComponent implements OnInit {
 
     constructor(
         public dialog: MatDialogRef<EditTodoComponent>,
+        private authService: AuthService,
         private todoService: TodoService,
+        private signalRService: SignalRService,
         private snackbar: MatSnackBar,
         @Inject(MAT_DIALOG_DATA) public todoId: string) { }
 
@@ -32,6 +34,14 @@ export class EditTodoComponent implements OnInit {
             this.lTodo = data === undefined || data === null ? new TodoModel() : data;
             this.editForm.controls.description.setValue(this.lTodo.description);
             this.editForm.controls.addedBy.setValue(this.lTodo.addedBy);
+        });
+
+        // ! SignalR
+        this.signalRService.$_notifcation.subscribe(notif => {
+            if (notif !== null && notif !== undefined) {
+                if (notif.refresh)
+                    this.todoService.get(this.lTodo.todoId);
+            }
         });
     }
 
@@ -47,6 +57,7 @@ export class EditTodoComponent implements OnInit {
                     if (!result.success)
                         this.snackbar.open(result.message, null, { duration: 4000 });
                 }
+                this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
             }).finally(() => this.dialog.close(true));
         }
     }

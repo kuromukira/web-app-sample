@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TodoModel } from 'src/app/models/todo.model';
-import { TodoService, AuthService } from 'src/app/services/_index.service';
+import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
 import { DialogComponent, DialogData } from '../dialog/dialog.component';
 import { AddTodoComponent, EditTodoComponent } from '../manage/_manage.component';
 
@@ -20,6 +20,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         private snackbar: MatSnackBar,
         private authService: AuthService,
         private todoService: TodoService,
+        private signalRService: SignalRService,
         private dialog: MatDialog,
         private customDialog: DialogComponent) { }
 
@@ -27,9 +28,22 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
         this.todoService.$_todos.subscribe(data => this.lTodos = data === undefined || data === null ? [] : data);
         this.btnRefresh_Clicked();
+
+        // ! SignalR
+        this.signalRService.startConnection();
+        this.signalRService.addNotifEventHandler();
+        this.signalRService.$_notifcation.subscribe(notif => {
+            if (notif !== null && notif !== undefined) {
+                if (notif.message !== undefined && notif.message !== null && notif.message !== '')
+                    this.snackbar.open(notif.message, '', { duration: 4000 });
+                if (notif.refresh)
+                    this.btnRefresh_Clicked();
+            }
+        });
     }
 
     ngOnDestroy() {
+        this.signalRService.stopConnection();
         this.todoService.clearSubjects();
     }
 
@@ -73,7 +87,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
-                    });
+                    }).finally(() => this.signalRService.sendUpdateNotif(this.authService.getUserEmail()));
                 }
             });
     }
@@ -87,7 +101,7 @@ export class HomeComponent implements OnInit, OnDestroy {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
-                    });
+                    }).finally(() => this.signalRService.sendUpdateNotif(this.authService.getUserEmail()));
                 }
             });
     }

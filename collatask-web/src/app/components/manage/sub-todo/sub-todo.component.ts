@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TodoModel } from 'src/app/models/todo.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { TodoService, AuthService } from 'src/app/services/_index.service';
+import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
 import { DialogComponent, DialogData } from '../../dialog/dialog.component';
 
 @Component({
@@ -25,6 +25,7 @@ export class SubTodoComponent implements OnInit {
 
     constructor(private todoService: TodoService,
         private authService: AuthService,
+        private signalRService: SignalRService,
         private snackbar: MatSnackBar,
         private customDialog: DialogComponent) { }
 
@@ -65,6 +66,7 @@ export class SubTodoComponent implements OnInit {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
+                        this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                     });
                 }
             });
@@ -79,6 +81,7 @@ export class SubTodoComponent implements OnInit {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
+                        this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                     });
                 }
             });
@@ -96,6 +99,7 @@ export class SubTodoComponent implements OnInit {
                         if (!result.success)
                             this.snackbar.open(result.message, null, { duration: 4000 });
                     }
+                    this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                 })
             }
             else this.todoService.modifySub(this.lSubTodo).then(result => {
@@ -103,6 +107,7 @@ export class SubTodoComponent implements OnInit {
                     if (!result.success)
                         this.snackbar.open(result.message, null, { duration: 4000 });
                 }
+                this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
             });
         }
     }

@@ -45,7 +45,8 @@ import {
 import {
   AuthService,
   LocalStorageService,
-  TodoService
+  TodoService,
+  SignalRService
 } from './services/_index.service';
 
 @NgModule({
@@ -76,6 +77,7 @@ import {
     AuthService,
     LocalStorageService,
     TodoService,
+    SignalRService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     { provide: BREAKPOINT, useValue: PRINT_BREAKPOINTS, multi: true },

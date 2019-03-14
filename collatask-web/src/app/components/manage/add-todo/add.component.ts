@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef, MatSnackBar } from '@angular/material';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { TodoService, AuthService } from 'src/app/services/_index.service';
+import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
 import { TodoModel } from 'src/app/models/todo.model';
 
 @Component({
@@ -22,7 +22,8 @@ export class AddTodoComponent implements OnInit {
     constructor(public dialog: MatDialogRef<AddTodoComponent>,
         private snackbar: MatSnackBar,
         private authService: AuthService,
-        private todoService: TodoService) { }
+        private todoService: TodoService,
+        private signalRService: SignalRService) { }
 
     ngOnInit() {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
@@ -43,6 +44,7 @@ export class AddTodoComponent implements OnInit {
                     if (!result.success)
                         this.snackbar.open(result.message, null, { duration: 4000 });
                 }
+                this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
             }).finally(() => this.dialog.close(true));
         }
     }

@@ -2,7 +2,8 @@
 <div mat-dialog-content fxLayout="column" fxLayoutGap="3%">
     <form [formGroup]="editForm" fxLayout="column" fxLayoutGap="3%" fxFlexFill>
         <mat-form-field fxFlexFill>
-            <input matInput required placeholder="Description" formControlName="description" [readonly]="inProgress">
+            <input matInput required placeholder="Description" formControlName="description"
+                [readonly]="inProgress || lTodo.isCompleted">
             <mat-error *ngIf="editForm.controls['description'].hasError('required')">
                 Description is <strong>required</strong>
             </mat-error>
@@ -18,5 +19,6 @@
 </div>
 <div mat-dialog-actions fxLayoutAlign="end center" fxLayoutGap="1%">
     <button mat-button [disabled]="inProgress" color="warn" (click)="onNoClick()">Cancel</button>
-    <button mat-button [disabled]="inProgress" color="primary" (click)="onYesClick()">Update</button>
+    <button mat-button *ngIf="!lTodo.isCompleted" [disabled]="inProgress" color="primary"
+        (click)="onYesClick()">Update</button>
 </div>
