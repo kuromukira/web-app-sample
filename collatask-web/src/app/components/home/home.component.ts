@@ -54,7 +54,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     btnInfo_Clicked(id: string) {
         const _dialog = this.dialog.open(EditTodoComponent, { width: '450px', data: id, disableClose: true });
         _dialog.afterOpened().subscribe(() => {
-            this.todoService.get(id);
+            this.todoService.get(id).then(() => this.todoService.getSubOf(id));
         });
         _dialog.afterClosed().subscribe(() => { });
     }
@@ -67,16 +67,28 @@ export class HomeComponent implements OnInit, OnDestroy {
     btnRemove_Clicked(id: string) {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to remove selected to-do?', null))
             .afterClosed().subscribe(result => {
-                if (result)
-                    this.todoService.remove(id);
+                if (result) {
+                    this.todoService.remove(id).then(result => {
+                        if (result !== undefined && result !== null) {
+                            if (!result.success)
+                                this.snackbar.open(result.message, null, { duration: 4000 });
+                        }
+                    });
+                }
             });
     }
 
     btnComplete_Clicked(id: string) {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to complete selected to-do?', null))
             .afterClosed().subscribe(result => {
-                if (result)
-                    this.todoService.complete(id);
+                if (result) {
+                    this.todoService.complete(id).then(result => {
+                        if (result !== undefined && result !== null) {
+                            if (!result.success)
+                                this.snackbar.open(result.message, null, { duration: 4000 });
+                        }
+                    });
+                }
             });
     }
 

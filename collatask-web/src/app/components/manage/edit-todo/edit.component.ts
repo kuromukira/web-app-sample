@@ -43,8 +43,10 @@ export class EditTodoComponent implements OnInit {
         if (this.editForm.valid) {
             this.lTodo.description = this.editForm.controls.description.value;
             this.todoService.modify(this.lTodo).then(result => {
-                if (!result.success)
-                    this.snackbar.open(result.message, null, { duration: 4000 });
+                if (result !== undefined && result !== null) {
+                    if (!result.success)
+                        this.snackbar.open(result.message, null, { duration: 4000 });
+                }
             }).finally(() => this.dialog.close(true));
         }
     }

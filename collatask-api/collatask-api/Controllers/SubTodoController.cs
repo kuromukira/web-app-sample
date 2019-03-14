@@ -107,7 +107,7 @@ namespace collatask_api.Controllers
         [Authorize]
         [HttpPost]
         [Route("complete")]
-        public async Task<IActionResult> Complete([FromBody]string id)
+        public async Task<IActionResult> Complete([FromQuery]string id)
         {
             try
             {
@@ -123,9 +123,9 @@ namespace collatask_api.Controllers
 
         /// <summary></summary>
         [Authorize]
-        [HttpDelete]
+        [HttpPut]
         [Route("remove")]
-        public async Task<IActionResult> Remove([FromBody]string id)
+        public async Task<IActionResult> Remove([FromQuery]string id)
         {
             try
             {
