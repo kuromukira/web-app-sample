@@ -76,20 +76,20 @@ export class TodoService {
         }
     }
 
-    async remove(id: string) {
+    async remove(id: string, user: string) {
         try {
             this.$_inProgress.next(true);
-            await this.http.put<any>(this.API_URL + 'api/Todo/remove?id=' + id, {}).subscribe(() => this.getAll());
+            await this.http.put<any>(this.API_URL + 'api/Todo/remove?id=' + id + "&currentUser=" + user, {}).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
         }
     }
 
-    async complete(id: string) {
+    async complete(id: string, user: string) {
         try {
             this.$_inProgress.next(true);
-            await this.http.post<any>(this.API_URL + 'api/Todo/complete?id=' + id, {}).subscribe(() => this.getAll());
+            await this.http.post<any>(this.API_URL + 'api/Todo/complete?id=' + id + "&currentUser=" + user, {}).subscribe(() => this.getAll());
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
@@ -146,20 +146,20 @@ export class TodoService {
         }
     }
 
-    async removeSub(parentId: string, subId: string) {
+    async removeSub(parentId: string, subId: string, user: string) {
         try {
             this.$_inProgress.next(true);
-            await this.http.put<any>(this.API_URL + 'api/SubTodo/remove?id=' + subId, {}).subscribe(() => this.getSubOf(parentId));
+            await this.http.put<any>(this.API_URL + 'api/SubTodo/remove?id=' + subId + "&currentUser=" + user, {}).subscribe(() => this.getSubOf(parentId));
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);
         }
     }
 
-    async completeSub(parentId: string, subId: string) {
+    async completeSub(parentId: string, subId: string, user: string) {
         try {
             this.$_inProgress.next(true);
-            await this.http.post<any>(this.API_URL + 'api/SubTodo/complete?id=' + subId, {}).subscribe(() => this.getSubOf(parentId));
+            await this.http.post<any>(this.API_URL + 'api/SubTodo/complete?id=' + subId + "&currentUser=" + user, {}).subscribe(() => this.getSubOf(parentId));
         }
         catch (error) {
             return new ServiceReturn(false, error.message, error);

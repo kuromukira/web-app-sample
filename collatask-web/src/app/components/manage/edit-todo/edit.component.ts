@@ -52,12 +52,12 @@ export class EditTodoComponent implements OnInit {
     onYesClick() {
         if (this.editForm.valid) {
             this.lTodo.description = this.editForm.controls.description.value;
+            this.lTodo.currentUser = this.authService.getUserEmail();
             this.todoService.modify(this.lTodo).then(result => {
                 if (result !== undefined && result !== null) {
                     if (!result.success)
                         this.snackbar.open(result.message, null, { duration: 4000 });
                 }
-                this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
             }).finally(() => this.dialog.close(true));
         }
     }

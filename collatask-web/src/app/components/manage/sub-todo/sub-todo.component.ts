@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TodoModel } from 'src/app/models/todo.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material';
-import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
+import { TodoService, AuthService } from 'src/app/services/_index.service';
 import { DialogComponent, DialogData } from '../../dialog/dialog.component';
 
 @Component({
@@ -25,7 +25,6 @@ export class SubTodoComponent implements OnInit {
 
     constructor(private todoService: TodoService,
         private authService: AuthService,
-        private signalRService: SignalRService,
         private snackbar: MatSnackBar,
         private customDialog: DialogComponent) { }
 
@@ -61,12 +60,11 @@ export class SubTodoComponent implements OnInit {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to remove selected sub to-do?', null))
             .afterClosed().subscribe(result => {
                 if (result) {
-                    this.todoService.removeSub(this.lParent.todoId, id).then(result => {
+                    this.todoService.removeSub(this.lParent.todoId, id, this.authService.getUserEmail()).then(result => {
                         if (result !== undefined && result !== null) {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
-                        this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                     });
                 }
             });
@@ -76,12 +74,11 @@ export class SubTodoComponent implements OnInit {
         this.customDialog.Prompt(new DialogData('Confirm', '', 'Are you sure you want to complete selected sub to-do?', null))
             .afterClosed().subscribe(result => {
                 if (result) {
-                    this.todoService.completeSub(this.lParent.todoId, id).then(result => {
+                    this.todoService.completeSub(this.lParent.todoId, id, this.authService.getUserEmail()).then(result => {
                         if (result !== undefined && result !== null) {
                             if (!result.success)
                                 this.snackbar.open(result.message, null, { duration: 4000 });
                         }
-                        this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                     });
                 }
             });
@@ -92,6 +89,7 @@ export class SubTodoComponent implements OnInit {
             this.lSubTodo.description = this.subTodoForm.controls.description.value;
             this.lSubTodo.parentTodoId = this.lParent.todoId;
             this.lSubTodo.addedBy = this.lParent.addedBy;
+            this.lSubTodo.currentUser = this.authService.getUserEmail();
             if (this.lSubTodo.todoId === undefined || this.lSubTodo.todoId === null || this.lSubTodo.todoId === '') {
                 this.lSubTodo.addedBy = this.authService.getUserEmail();
                 this.todoService.addSub(this.lSubTodo).then(result => {
@@ -99,7 +97,6 @@ export class SubTodoComponent implements OnInit {
                         if (!result.success)
                             this.snackbar.open(result.message, null, { duration: 4000 });
                     }
-                    this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
                 })
             }
             else this.todoService.modifySub(this.lSubTodo).then(result => {
@@ -107,7 +104,6 @@ export class SubTodoComponent implements OnInit {
                     if (!result.success)
                         this.snackbar.open(result.message, null, { duration: 4000 });
                 }
-                this.signalRService.sendUpdateNotif(this.authService.getUserEmail());
             });
         }
     }

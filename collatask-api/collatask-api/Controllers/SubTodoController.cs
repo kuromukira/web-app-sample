@@ -1,7 +1,9 @@
-﻿using collatask_repository.Interface;
+﻿using collatask_api.TaskHub;
+using collatask_repository.Interface;
 using collatask_repository.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,13 +13,13 @@ namespace collatask_api.Controllers
     /// <summary></summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class SubTodoController : ControllerBase
+    public class SubTodoController : BaseController
     {
         /// <summary></summary>
         private ISubTodoRepository SubTodoRepository { get; }
 
         /// <summary></summary>
-        public SubTodoController(ISubTodoRepository repository) => SubTodoRepository = repository;
+        public SubTodoController(ISubTodoRepository repository, IHubContext<NotificationHub> context) : base(context) => SubTodoRepository = repository;
 
         /// <summary></summary>
         [Authorize]
@@ -77,6 +79,7 @@ namespace collatask_api.Controllers
             {
                 SubTodoRepository.Add(todo);
                 await SubTodoRepository.Commit();
+                await PostNotif(todo.CurrentUser ?? string.Empty, true);
                 return Ok();
             }
             catch (Exception ex)
@@ -95,6 +98,7 @@ namespace collatask_api.Controllers
             {
                 SubTodoRepository.Modify(todo);
                 await SubTodoRepository.Commit();
+                await PostNotif(todo.CurrentUser ?? string.Empty, true);
                 return Ok();
             }
             catch (Exception ex)
@@ -107,12 +111,13 @@ namespace collatask_api.Controllers
         [Authorize]
         [HttpPost]
         [Route("complete")]
-        public async Task<IActionResult> Complete([FromQuery]string id)
+        public async Task<IActionResult> Complete([FromQuery]string id, [FromQuery]string currentUser)
         {
             try
             {
                 SubTodoRepository.Complete(Guid.Parse(id));
                 await SubTodoRepository.Commit();
+                await PostNotif(currentUser ?? string.Empty, true);
                 return Ok();
             }
             catch (Exception ex)
@@ -125,12 +130,13 @@ namespace collatask_api.Controllers
         [Authorize]
         [HttpPut]
         [Route("remove")]
-        public async Task<IActionResult> Remove([FromQuery]string id)
+        public async Task<IActionResult> Remove([FromQuery]string id, [FromQuery]string currentUser)
         {
             try
             {
                 SubTodoRepository.Remove(Guid.Parse(id));
                 await SubTodoRepository.Commit();
+                await PostNotif(currentUser ?? string.Empty, true);
                 return Ok();
             }
             catch (Exception ex)

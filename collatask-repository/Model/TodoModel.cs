@@ -33,6 +33,9 @@ namespace collatask_repository.Model
         /// <summary>Email Address</summary>
         public string AddedBy { get; set; }
 
+        [BsonIgnore]
+        public string CurrentUser { get; set; }
+
         [BsonField]
         /// <summary></summary>
         public bool IsCompleted { get; set; }
