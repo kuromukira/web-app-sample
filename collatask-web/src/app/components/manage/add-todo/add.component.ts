@@ -39,10 +39,11 @@ export class AddTodoComponent implements OnInit {
             _todo.description = this.addForm.controls.description.value;
             _todo.addedBy = this.addForm.controls.addedBy.value;
             this.todoService.add(_todo).then(result => {
-                if (result.success)
-                    this.dialog.close(true);
-                else this.snackbar.open(result.message, null, { duration: 4000 });
-            })
+                if (result !== undefined && result !== null) {
+                    if (!result.success)
+                        this.snackbar.open(result.message, null, { duration: 4000 });
+                }
+            }).finally(() => this.dialog.close(true));
         }
     }
 

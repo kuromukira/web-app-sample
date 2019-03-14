@@ -3,6 +3,7 @@ using collatask_repository.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace collatask_api.Controllers
@@ -42,7 +43,7 @@ namespace collatask_api.Controllers
         {
             try
             {
-                return Ok(SubTodoRepository.GetAll());
+                return Ok(SubTodoRepository.GetAll().OrderBy(o => o.Description).ToList());
             }
             catch (Exception ex)
             {
@@ -58,7 +59,7 @@ namespace collatask_api.Controllers
         {
             try
             {
-                return Ok(SubTodoRepository.GetSubOf(parentId));
+                return Ok(SubTodoRepository.GetSubOf(parentId).OrderBy(o => o.Description).ToList());
             }
             catch (Exception ex)
             {
@@ -106,7 +107,7 @@ namespace collatask_api.Controllers
         [Authorize]
         [HttpPost]
         [Route("complete")]
-        public async Task<IActionResult> Complete([FromBody]string id)
+        public async Task<IActionResult> Complete([FromQuery]string id)
         {
             try
             {
@@ -122,9 +123,9 @@ namespace collatask_api.Controllers
 
         /// <summary></summary>
         [Authorize]
-        [HttpDelete]
+        [HttpPut]
         [Route("remove")]
-        public async Task<IActionResult> Remove([FromBody]string id)
+        public async Task<IActionResult> Remove([FromQuery]string id)
         {
             try
             {

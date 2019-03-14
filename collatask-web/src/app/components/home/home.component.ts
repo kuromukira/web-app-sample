@@ -54,23 +54,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     btnInfo_Clicked(id: string) {
         const _dialog = this.dialog.open(EditTodoComponent, { width: '450px', data: id, disableClose: true });
         _dialog.afterOpened().subscribe(() => {
-            this.todoService.get(id).then(result => {
-                if (result.success)
-                    this.todoService.getSubOf(id);
-            });
+            this.todoService.get(id).then(() => this.todoService.getSubOf(id));
         });
-        _dialog.afterClosed().subscribe(result => {
-            if (result)
-                this.btnRefresh_Clicked();
-        });
+        _dialog.afterClosed().subscribe(() => { });
     }
 
     btnAdd_Clicked() {
         this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
-            .afterClosed().subscribe(result => {
-                if (result)
-                    this.btnRefresh_Clicked();
-            });
+            .afterClosed().subscribe(() => { });
     }
 
     btnRemove_Clicked(id: string) {
@@ -78,9 +69,10 @@ export class HomeComponent implements OnInit, OnDestroy {
             .afterClosed().subscribe(result => {
                 if (result) {
                     this.todoService.remove(id).then(result => {
-                        if (result.success)
-                            this.btnRefresh_Clicked();
-                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                        if (result !== undefined && result !== null) {
+                            if (!result.success)
+                                this.snackbar.open(result.message, null, { duration: 4000 });
+                        }
                     });
                 }
             });
@@ -91,9 +83,10 @@ export class HomeComponent implements OnInit, OnDestroy {
             .afterClosed().subscribe(result => {
                 if (result) {
                     this.todoService.complete(id).then(result => {
-                        if (result.success)
-                            this.btnRefresh_Clicked();
-                        else this.snackbar.open(result.message, '', { duration: 4000 });
+                        if (result !== undefined && result !== null) {
+                            if (!result.success)
+                                this.snackbar.open(result.message, null, { duration: 4000 });
+                        }
                     });
                 }
             });
