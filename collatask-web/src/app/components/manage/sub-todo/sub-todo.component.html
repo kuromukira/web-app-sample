@@ -1,6 +1,7 @@
 <div fxLayout="column" fxFlexFill>
     <h4>Sub To-Do</h4>
-    <form [formGroup]="subTodoForm" fxLayout="row" fxLayoutGap="2%" fxLayoutAlign="start center">
+    <form *ngIf="!lParent.isCompleted" [formGroup]="subTodoForm" fxLayout="row" fxLayoutGap="2%"
+        fxLayoutAlign="start center">
         <mat-form-field fxFlex="80">
             <input matInput required placeholder="Description" formControlName="description" [readonly]="inProgress">
             <mat-error *ngIf="subTodoForm.controls['description'].hasError('required')">
@@ -21,20 +22,24 @@
         <!-- Description Column -->
         <ng-container matColumnDef="description">
             <mat-header-cell *matHeaderCellDef> Sub To-Do </mat-header-cell>
-            <mat-cell *matCellDef="let row" matTooltip="Added by {{ row.addedBy }}"> {{ row.description }} </mat-cell>
+            <mat-cell *matCellDef="let row" matTooltip="Added by {{ row.addedBy }}">
+                {{ row.description }}&nbsp;&nbsp;
+                <span *ngIf="row.isCompleted"><strong><em>(Complete)</em></strong></span>
+            </mat-cell>
         </ng-container>
 
         <!-- Controls -->
         <ng-container matColumnDef="controls">
             <mat-header-cell *matHeaderCellDef> </mat-header-cell>
             <mat-cell *matCellDef="let row" fxLayoutGap="1%" fxLayout.xs="column" fxLayoutAlign="end center">
-                <button mat-icon-button color="accent" [disabled]="inProgress" (click)="btnEditSub_Clicked(row.todoId)">
+                <button mat-icon-button color="accent" *ngIf="!row.isCompleted" [disabled]="inProgress"
+                    (click)="btnEditSub_Clicked(row.todoId)">
                     <mat-icon>information</mat-icon>
                 </button>
                 <button mat-icon-button color="warn" [disabled]="inProgress" (click)="btnRemoveSub_Clicked(row.todoId)">
                     <mat-icon>delete</mat-icon>
                 </button>
-                <button mat-icon-button color="primary" [disabled]="inProgress"
+                <button mat-icon-button *ngIf="!row.isCompleted" color="primary" [disabled]="inProgress"
                     (click)="btnCompleteSub_Clicked(row.todoId)">
                     <mat-icon>done</mat-icon>
                 </button>

@@ -3,6 +3,7 @@ using collatask_repository.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -102,7 +103,11 @@ namespace collatask_api.Controllers
             try
             {
                 TodoRepository.Complete(Guid.Parse(id));
+                IList<TodoModel> _subTodos = SubTodoRepository.GetSubOf(id);
+                foreach (TodoModel _subTodo in _subTodos)
+                    SubTodoRepository.Complete(_subTodo._id);
                 await TodoRepository.Commit();
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)
@@ -120,7 +125,11 @@ namespace collatask_api.Controllers
             try
             {
                 TodoRepository.Remove(Guid.Parse(id));
+                IList<TodoModel> _subTodos = SubTodoRepository.GetSubOf(id);
+                foreach (TodoModel _subTodo in _subTodos)
+                    SubTodoRepository.Remove(_subTodo._id);
                 await TodoRepository.Commit();
+                await SubTodoRepository.Commit();
                 return Ok();
             }
             catch (Exception ex)
