@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -64,6 +65,7 @@ import {
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase, 'collatask-firebase-config'),
     AppRoutingModule,
+    DragDropModule,
     FormsModule, ReactiveFormsModule,
     MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule,
     MatSelectModule, MatOptionModule, MatCardModule, MatDialogModule, MatToolbarModule,
