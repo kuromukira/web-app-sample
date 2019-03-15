@@ -21,6 +21,7 @@ import {
   MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
   MatFormFieldModule, MatMenuModule, MatTooltipModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
@@ -73,6 +74,7 @@ import {
     BrowserAnimationsModule,
     AngularFireModule.initializeApp(environment.firebase, 'collatask-firebase-config'),
     AppRoutingModule,
+    DragDropModule,
     FormsModule, ReactiveFormsModule,
     MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule,
     MatSelectModule, MatOptionModule, MatCardModule, MatDialogModule, MatToolbarModule,
