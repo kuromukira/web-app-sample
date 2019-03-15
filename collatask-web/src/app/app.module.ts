@@ -19,7 +19,7 @@ const PRINT_BREAKPOINTS = [{
 import {
   MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule, MatSelectModule, MatOptionModule, MatTabsModule,
   MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
-  MatFormFieldModule, MatMenuModule, MatTooltipModule
+  MatFormFieldModule, MatMenuModule, MatTooltipModule, MatChipsModule
 } from '@angular/material';
 
 // Components
@@ -30,9 +30,12 @@ import {
   DialogComponent,
   PromptDialogComponent,
   HomeComponent,
+  NavButtonsComponent,
   AddTodoComponent,
   EditTodoComponent,
-  SubTodoComponent
+  SubTodoComponent,
+  CalendarComponent,
+  CalendarToolbarComponent
 } from './components/_index.component';
 
 // Helpers
@@ -44,6 +47,7 @@ import {
 // Services
 import {
   AuthService,
+  CalendarService,
   LocalStorageService,
   TodoService,
   SignalRService
@@ -55,9 +59,12 @@ import {
     LoginComponent,
     PromptDialogComponent,
     HomeComponent,
+    NavButtonsComponent,
     AddTodoComponent,
     EditTodoComponent,
-    SubTodoComponent
+    SubTodoComponent,
+    CalendarComponent,
+    CalendarToolbarComponent
   ],
   imports: [
     BrowserModule,
@@ -68,13 +75,14 @@ import {
     MatTableModule, MatIconModule, MatDividerModule, MatButtonModule, MatInputModule,
     MatSelectModule, MatOptionModule, MatCardModule, MatDialogModule, MatToolbarModule,
     MatProgressBarModule, MatSnackBarModule, MatTabsModule, MatFormFieldModule, MatMenuModule,
-    MatTooltipModule,
+    MatTooltipModule, MatChipsModule,
     HttpClientModule,
     FlexLayoutModule.withConfig({ useColumnBasisZero: false })
   ],
   providers: [
     DialogComponent,
     AuthService,
+    CalendarService,
     LocalStorageService,
     TodoService,
     SignalRService,

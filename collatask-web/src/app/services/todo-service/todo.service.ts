@@ -8,7 +8,7 @@ import { ServiceReturn } from 'src/app/models/service.model';
 export class TodoService {
 
     // Change this per actual URL of API
-    API_URL: string = 'https://localhost:44311/';
+    API_URL: string = 'https://localhost:5001/';
 
     constructor(private http: HttpClient) { }
 

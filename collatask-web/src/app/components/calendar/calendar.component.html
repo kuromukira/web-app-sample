@@ -1,0 +1,19 @@
+<calendar-toolbar [currentDate]="lCurrentDate"></calendar-toolbar>
+<section fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign="center center" fxFlex fxLayoutGap="2%">
+        <mat-chip-list fxFlexFill>
+            <mat-chip *ngFor="let days of lDaysOfweek" fxFlexFill fxFlex="13">
+                {{ days }}
+            </mat-chip>
+        </mat-chip-list>
+    </div>
+    <div fxLayout="column" fxFlexFill>
+        <ul>
+            <li *ngFor="let weeks of lWeeks" fxLayout="row">
+                <div *ngFor="let day of weeks.days" fxLayout="row" fxLayoutGap="2%">
+                    {{ day.date }}
+                </div>
+            </li>
+        </ul>
+    </div>
+</section>
