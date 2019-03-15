@@ -13,10 +13,12 @@
                     <h5>{{ day.date | date:'MMM-d' }}</h5>
                 </div>
                 <div class="calendar-day-inner-box" fxFlexFill>
-
+                    {{ day.date.getMonth() }}
+                    {{ lCurrentDate.getMonth() }}
                 </div>
                 <footer fxLayoutAlign="end center" class="calendar-day-box-footer">
-                    <button mat-icon-button color="primary" (click)="btnAdd_Clicked()">
+                    <button mat-icon-button color="primary" (click)="btnAdd_Clicked(day.date)"
+                        [disabled]="day.date.getMonth() !== lCurrentDate.getMonth()">
                         <mat-icon>add</mat-icon>
                     </button>
                 </footer>

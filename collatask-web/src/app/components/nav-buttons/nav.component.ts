@@ -5,6 +5,7 @@ import { TodoModel } from 'src/app/models/todo.model';
 import { TodoService, AuthService, SignalRService } from 'src/app/services/_index.service';
 import { DialogComponent, DialogData } from '../dialog/dialog.component';
 import { AddTodoComponent } from '../manage/_manage.component';
+import { DayDate } from 'src/app/models/calendar.model';
 
 @Component({
     selector: 'nav-buttons',
@@ -71,8 +72,13 @@ export class NavButtonsComponent implements OnInit, OnDestroy {
     }
 
     btnAdd_Clicked() {
-        this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
-            .afterClosed().subscribe(() => { });
+        let _dayDate: DayDate = new DayDate();
+        _dayDate.date = new Date();
+        _dayDate.month = new Date().getMonth();
+        this.dialog.open(AddTodoComponent, {
+            width: '450px', disableClose: true,
+            data: _dayDate
+        }).afterClosed().subscribe(() => { });
     }
 
 }

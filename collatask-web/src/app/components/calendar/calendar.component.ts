@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddTodoComponent } from '../manage/_manage.component';
 import { CalendarService } from 'src/app/services/_index.service';
+import { DayDate } from 'src/app/models/calendar.model';
 
 @Component({
     selector: 'calendar-main',
@@ -32,9 +33,14 @@ export class CalendarComponent implements OnInit {
         this.calendarService.buildMonth(new Date(_year + "/" + _month + "/1"));
     }
 
-    btnAdd_Clicked() {
-        this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
-            .afterClosed().subscribe(() => { });
+    btnAdd_Clicked(selectedDate: Date) {
+        let _dayDate: DayDate = new DayDate();
+        _dayDate.date = selectedDate;
+        _dayDate.month = selectedDate.getMonth();
+        this.dialog.open(AddTodoComponent, {
+            width: '450px', disableClose: true,
+            data: _dayDate
+        }).afterClosed().subscribe(() => { });
     }
 
 }

@@ -14,6 +14,12 @@
                 Added By is <strong>required</strong>
             </mat-error>
         </mat-form-field>
+        <mat-form-field fxFlexFill>
+            <input matInput [min]="minDate" [max]="maxDate" formControlName="todoDate" [matDatepicker]="picker"
+                placeholder="Choose a date" [readonly]="true">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
     </form>
     <sub-todo></sub-todo>
 </div>
