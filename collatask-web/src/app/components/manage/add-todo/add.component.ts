@@ -31,8 +31,10 @@ export class AddTodoComponent implements OnInit {
 
     ngOnInit() {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
-        this.minDate = new Date(new Date().getFullYear(), this.data.month, 1);
-        this.maxDate = new Date(new Date().getFullYear(), this.data.month + 1, 0);
+        if (this.data.month !== undefined) {
+            this.minDate = new Date(new Date().getFullYear(), this.data.month, 1);
+            this.maxDate = new Date(new Date().getFullYear(), this.data.month + 1, 0);
+        }
         this.addForm.controls.todoDate.setValue(this.data.date);
         this.addForm.controls.addedBy.setValue(this.authService.getUserEmail());
     }

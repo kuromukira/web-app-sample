@@ -74,7 +74,7 @@ export class NavButtonsComponent implements OnInit, OnDestroy {
     btnAdd_Clicked() {
         let _dayDate: DayDate = new DayDate();
         _dayDate.date = new Date();
-        _dayDate.month = new Date().getMonth();
+        _dayDate.month = undefined;
         this.dialog.open(AddTodoComponent, {
             width: '450px', disableClose: true,
             data: _dayDate
