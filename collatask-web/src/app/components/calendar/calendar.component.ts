@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { AddTodoComponent } from '../manage/_manage.component';
-import { CalendarService } from 'src/app/services/_index.service';
+import { CalendarService, TodoService } from 'src/app/services/_index.service';
 import { DayDate } from 'src/app/models/calendar.model';
 
 @Component({
@@ -11,6 +11,7 @@ import { DayDate } from 'src/app/models/calendar.model';
 })
 export class CalendarComponent implements OnInit {
 
+    inProgress: boolean;
     lCurrentDate: Date;
     lWeeks: Object[] = [];
     lDaysOfweek: Object[] = [
@@ -22,11 +23,14 @@ export class CalendarComponent implements OnInit {
         { name: "SAT", color: "accent" },
         { name: "SUN", color: "warn" }];
 
-    constructor(private calendarService: CalendarService, private dialog: MatDialog) {
+    constructor(private calendarService: CalendarService,
+        private todoService: TodoService,
+        private dialog: MatDialog) {
         this.lCurrentDate = new Date();
     }
 
     ngOnInit() {
+        this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
         this.calendarService.Weeks.subscribe(weeks => this.lWeeks = weeks);
         let _year: number = this.lCurrentDate.getFullYear();
         let _month: number = this.lCurrentDate.getMonth() + 1; // Add 1 since getMonth returns the month index
