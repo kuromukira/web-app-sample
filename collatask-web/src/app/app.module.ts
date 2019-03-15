@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { AngularFireModule } from '@angular/fire';
-import { DragDropModule } from '@angular/cdk/drag-drop';
 import { BrowserModule } from '@angular/platform-browser';
 import { environment } from '../environments/environment';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -22,6 +21,7 @@ import {
   MatCardModule, MatDialogModule, MatToolbarModule, MatProgressBarModule, MatSnackBarModule, ErrorStateMatcher, ShowOnDirtyErrorStateMatcher,
   MatFormFieldModule, MatMenuModule, MatTooltipModule, MatChipsModule, MatDatepickerModule, MatNativeDateModule
 } from '@angular/material';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 // Components
 import { AppRoutingModule } from './app-routing.module';
