@@ -35,7 +35,8 @@ import {
   EditTodoComponent,
   SubTodoComponent,
   CalendarComponent,
-  CalendarToolbarComponent
+  CalendarToolbarComponent,
+  CalendarDropListComponent
 } from './components/_index.component';
 
 // Helpers
@@ -64,7 +65,8 @@ import {
     EditTodoComponent,
     SubTodoComponent,
     CalendarComponent,
-    CalendarToolbarComponent
+    CalendarToolbarComponent,
+    CalendarDropListComponent
   ],
   imports: [
     BrowserModule,

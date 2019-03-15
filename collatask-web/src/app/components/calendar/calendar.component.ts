@@ -11,7 +11,6 @@ import { DayDate } from 'src/app/models/calendar.model';
 })
 export class CalendarComponent implements OnInit {
 
-    inProgress: boolean;
     lCurrentDate: Date;
     lWeeks: Object[] = [];
     lDaysOfweek: Object[] = [
@@ -24,13 +23,11 @@ export class CalendarComponent implements OnInit {
         { name: "SUN", color: "warn" }];
 
     constructor(private calendarService: CalendarService,
-        private todoService: TodoService,
         private dialog: MatDialog) {
         this.lCurrentDate = new Date();
     }
 
     ngOnInit() {
-        this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
         this.calendarService.Weeks.subscribe(weeks => this.lWeeks = weeks);
         let _year: number = this.lCurrentDate.getFullYear();
         let _month: number = this.lCurrentDate.getMonth() + 1; // Add 1 since getMonth returns the month index
