@@ -1,5 +1,8 @@
-<ul>
+<!-- <ul>
     <li *ngFor="let todo of lTodosPerDay">
         {{ todo.description }}
     </li>
-</ul>
+</ul> -->
+<div cdkDropList #doneList="cdkDropList" [cdkDropListData]="lTodosPerDay" (cdkDropListDropped)="drop($event)">
+    <div *ngFor="let todo of lTodosPerDay" cdkDrag>{{ todo.description }}</div>
+</div>
