@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { AddTodoComponent } from '../manage/_manage.component';
 import { CalendarService } from 'src/app/services/_index.service';
 
 @Component({
@@ -10,15 +12,29 @@ export class CalendarComponent implements OnInit {
 
     lCurrentDate: Date;
     lWeeks: Object[] = [];
-    lDaysOfweek: string[] = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
+    lDaysOfweek: Object[] = [
+        { name: "MON", color: "primary" },
+        { name: "TUE", color: "primary" },
+        { name: "WED", color: "primary" },
+        { name: "THU", color: "primary" },
+        { name: "FRI", color: "primary" },
+        { name: "SAT", color: "accent" },
+        { name: "SUN", color: "warn" }];
 
-    constructor(private calendarService: CalendarService) {
+    constructor(private calendarService: CalendarService, private dialog: MatDialog) {
         this.lCurrentDate = new Date();
     }
 
     ngOnInit() {
         this.calendarService.Weeks.subscribe(weeks => this.lWeeks = weeks);
-        this.calendarService.buildMonth(new Date('2019-03-01'));
+        let _year: number = this.lCurrentDate.getFullYear();
+        let _month: number = this.lCurrentDate.getMonth() + 1; // Add 1 since getMonth returns the month index
+        this.calendarService.buildMonth(new Date(_year + "/" + _month + "/1"));
+    }
+
+    btnAdd_Clicked() {
+        this.dialog.open(AddTodoComponent, { width: '450px', disableClose: true })
+            .afterClosed().subscribe(() => { });
     }
 
 }

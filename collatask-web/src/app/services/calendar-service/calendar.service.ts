@@ -55,9 +55,8 @@ export class CalendarService {
         }
 
         try {
-            if (_weeks[5]['days'][0].month !== new Date(_weeks[5]['days'][0].date).getMonth()) {
+            if (_weeks[5]['days'][0].month !== new Date(_weeks[5]['days'][0].date).getMonth())
                 _weeks.splice(5, 1);
-            }
         } catch (error) {
             console.log('Error occured while removing last week of month.');
         }

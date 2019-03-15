@@ -1,19 +1,26 @@
 <calendar-toolbar [currentDate]="lCurrentDate"></calendar-toolbar>
-<section fxLayout="column">
-    <div fxLayout="row" fxLayoutAlign="center center" fxFlex fxLayoutGap="2%">
-        <mat-chip-list fxFlexFill>
-            <mat-chip *ngFor="let days of lDaysOfweek" fxFlexFill fxFlex="13">
-                {{ days }}
-            </mat-chip>
-        </mat-chip-list>
+<section fxLayout="column" class="collatask-content-padding">
+    <div fxLayout="row" fxFlex fxLayoutAlign="start center">
+        <div *ngFor="let days of lDaysOfweek" fxLayout="row" fxFlex="14.5">
+            <h3>{{ days.name }}</h3>
+        </div>
     </div>
+    <mat-divider></mat-divider>
     <div fxLayout="column" fxFlexFill>
-        <ul>
-            <li *ngFor="let weeks of lWeeks" fxLayout="row">
-                <div *ngFor="let day of weeks.days" fxLayout="row" fxLayoutGap="2%">
-                    {{ day.date }}
+        <div *ngFor="let weeks of lWeeks" fxLayout="row">
+            <div class="calendar-day-box" *ngFor="let day of weeks.days" fxLayout="column" fxFlex="14.5" fxFlexFill>
+                <div fxLayout="row" fxLayoutAlign="end center">
+                    <h5>{{ day.date | date:'MMM-d' }}</h5>
                 </div>
-            </li>
-        </ul>
+                <div class="calendar-day-inner-box" fxFlexFill>
+
+                </div>
+                <footer fxLayoutAlign="end center" class="calendar-day-box-footer">
+                    <button mat-icon-button color="primary" (click)="btnAdd_Clicked()">
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </footer>
+            </div>
+        </div>
     </div>
 </section>
