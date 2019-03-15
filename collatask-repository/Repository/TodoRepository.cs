@@ -19,6 +19,8 @@ namespace collatask_repository.Repository
                 throw new NullReferenceException("Description is required.");
             else if (string.IsNullOrWhiteSpace(todo.AddedBy))
                 throw new NullReferenceException("Added By is required.");
+            else if (todo.TodoDate.Equals(default(DateTime)))
+                throw new NullReferenceException("To-Do date is required.");
             else
             {
                 todo._id = Guid.NewGuid();
@@ -51,6 +53,8 @@ namespace collatask_repository.Repository
                 throw new NullReferenceException("Description is required.");
             else if (string.IsNullOrWhiteSpace(todo.AddedBy))
                 throw new NullReferenceException("Added By is required.");
+            else if (todo.TodoDate.Equals(default(DateTime)))
+                throw new NullReferenceException("To-Do date is required.");
             else
             {
                 todo._id = Guid.Parse(todo.TodoId);

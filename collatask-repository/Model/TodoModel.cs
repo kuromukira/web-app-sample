@@ -26,12 +26,17 @@ namespace collatask_repository.Model
         [Required]
         /// <summary></summary>
         public string Description { get; set; }
-                
+
         [BsonField]
         [Required]
         [EmailAddress]
         /// <summary>Email Address</summary>
         public string AddedBy { get; set; }
+
+        [BsonField]
+        [Required]
+        /// <summary>Todo Date</summary>
+        public DateTime TodoDate { get; set; }
 
         [BsonIgnore]
         public string CurrentUser { get; set; }

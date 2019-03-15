@@ -1,0 +1,14 @@
+.calendar-day-box {
+    border: 1px solid rgb(139, 153, 165);
+    padding: 5px 7px 5px 5px;
+}
+
+.calendar-day-inner-box {    
+    max-height: 200px !important;
+    min-height: 200px !important;
+}
+
+.calendar-day-box-footer {
+    bottom: 0;
+    z-index: 499;
+}
