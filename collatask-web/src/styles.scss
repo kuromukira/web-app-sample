@@ -12,3 +12,10 @@
 .collatask-default-bg {
     background-color: lightgray !important;
 }
+
+.collatask-toolbar-fixed {
+    position: sticky; /* IE does not support this */
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0;
+    z-index: 500;
+}

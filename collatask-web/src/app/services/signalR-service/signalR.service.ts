@@ -10,7 +10,7 @@ export class SignalRService {
     constructor(private http: HttpClient) { }
 
     // Change this per actual URL of API
-    API_URL: string = 'https://localhost:44311/';
+    API_URL: string = 'https://localhost:5001/';
     $_notifcation: BehaviorSubject<NotificationResult> = new BehaviorSubject(new NotificationResult());
 
     private hubConnected: BehaviorSubject<boolean> = new BehaviorSubject(false);
