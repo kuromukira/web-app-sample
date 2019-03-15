@@ -6,8 +6,28 @@ import { BehaviorSubject } from 'rxjs';
 export class CalendarService {
 
     public Weeks: BehaviorSubject<Object[]> = new BehaviorSubject([]);
+    public CurrentCalendarDate: BehaviorSubject<Date> = new BehaviorSubject(new Date());
 
     constructor() { }
+
+    private ComputeNewMonth(move: number): Date {
+        let _currentDate = new Date(this.CurrentCalendarDate.value);
+        _currentDate.setMonth(_currentDate.getMonth() + move);
+        return _currentDate;
+    }
+
+    public nextCalendarMonth() {
+        this.CurrentCalendarDate.next(this.ComputeNewMonth(1));
+    }
+
+    public prevCalendarMonth() {
+        this.CurrentCalendarDate.next(this.ComputeNewMonth(-1));
+    }
+
+    // Code below is from github which generates a sequence of dates per week within one month.
+    // I modified some parts of the code (such as the starting day of the week, from Monday to Sunday)
+    // to fit the project needs.
+    // -Nor
 
     /**
      * Add days
@@ -44,7 +64,7 @@ export class CalendarService {
         let _weeks: Object[] = [];
 
         while (_firstDay.getDay() === 0 ? 7 : _firstDay.getDay() >= 1) {
-            if (_firstDay.getDay() === 1)
+            if (_firstDay.getDay() === 0) // to start with sunday [0]
                 break;
             else _firstDay = this.addDay(_firstDay, -1);
         }

@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { TodoService } from 'src/app/services/_index.service';
+import { TodoService, CalendarService } from 'src/app/services/_index.service';
 
 @Component({
     selector: 'calendar-toolbar',
@@ -14,10 +14,18 @@ export class CalendarToolbarComponent implements OnInit {
         this.lCurrentDate = new Date(date);
     }
 
-    constructor(private todoService: TodoService) { }
+    constructor(private todoService: TodoService, private calendarService: CalendarService) { }
 
     ngOnInit() {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
+    }
+
+    btnPrevMonth_Clicked() {
+        this.calendarService.prevCalendarMonth();
+    }
+
+    btnNextMonth_Clicked() {
+        this.calendarService.nextCalendarMonth();
     }
 
 }
