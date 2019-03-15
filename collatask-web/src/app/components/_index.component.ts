@@ -5,3 +5,4 @@ export * from './manage/_manage.component';
 export * from './dialog/dialog.component';
 export * from './calendar/calendar.component';
 export * from './calendar/calendar-toolbar/toolbar.component';
+export * from './calendar/calendar-drop-box/list.component';

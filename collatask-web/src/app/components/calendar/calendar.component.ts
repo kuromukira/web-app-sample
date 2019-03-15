@@ -11,26 +11,27 @@ import { DayDate } from 'src/app/models/calendar.model';
 })
 export class CalendarComponent implements OnInit {
 
-    lCurrentDate: Date;
+    lCurrentDate: Date = new Date();
     lWeeks: Object[] = [];
     lDaysOfweek: Object[] = [
+        { name: "SUN", color: "warn" },
         { name: "MON", color: "primary" },
         { name: "TUE", color: "primary" },
         { name: "WED", color: "primary" },
         { name: "THU", color: "primary" },
         { name: "FRI", color: "primary" },
-        { name: "SAT", color: "accent" },
-        { name: "SUN", color: "warn" }];
+        { name: "SAT", color: "accent" }];
 
-    constructor(private calendarService: CalendarService, private dialog: MatDialog) {
-        this.lCurrentDate = new Date();
-    }
+    constructor(private calendarService: CalendarService, private dialog: MatDialog) { }
 
     ngOnInit() {
+        this.calendarService.CurrentCalendarDate.subscribe(calendarDate => {
+            this.lCurrentDate = calendarDate;
+            let _year: number = calendarDate.getFullYear();
+            let _month: number = calendarDate.getMonth() + 1; // Add 1 since getMonth returns the month index
+            this.calendarService.buildMonth(new Date(_year + "/" + _month + "/1"));
+        });
         this.calendarService.Weeks.subscribe(weeks => this.lWeeks = weeks);
-        let _year: number = this.lCurrentDate.getFullYear();
-        let _month: number = this.lCurrentDate.getMonth() + 1; // Add 1 since getMonth returns the month index
-        this.calendarService.buildMonth(new Date(_year + "/" + _month + "/1"));
     }
 
     btnAdd_Clicked(selectedDate: Date) {
