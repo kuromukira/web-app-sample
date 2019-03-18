@@ -39,9 +39,17 @@ export class CalendarDropListComponent implements OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        let _todoModel: TodoModel = JSON.parse(event.previousContainer.data[event.previousIndex]);
-        console.log(_todoModel);
-        console.log(this.lBoxDate);
+        if (event.previousContainer !== event.container) {
+            let _todoModel: any = event.previousContainer.data[event.previousIndex];
+            _todoModel.todoDate = this.lBoxDate;
+            _todoModel.currentUser = this.authService.getUserEmail();
+            this.todoService.modify(_todoModel).then(result => {
+                if (result !== undefined && result !== null) {
+                    if (!result.success)
+                        this.snackbar.open(result.message, null, { duration: 4000 });
+                }
+            });
+        }
     }
 
     // Possible duplicate code with home.component

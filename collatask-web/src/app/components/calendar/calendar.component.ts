@@ -22,8 +22,6 @@ export class CalendarComponent implements OnInit {
         { name: "FRI", color: "primary" },
         { name: "SAT", color: "accent" }];
 
-    lConnectedDropList: string[] = [];
-
     constructor(private calendarService: CalendarService, private dialog: MatDialog) { }
 
     ngOnInit() {
@@ -33,17 +31,7 @@ export class CalendarComponent implements OnInit {
             let _month: number = calendarDate.getMonth() + 1; // Add 1 since getMonth returns the month index
             this.calendarService.buildMonth(new Date(_year + "/" + _month + "/1"));
         });
-        this.calendarService.Weeks.subscribe(weeks => {
-            this.lWeeks = weeks;
-
-            // Create a list of formated day names to create a connected dragdrop list
-            this.lConnectedDropList = [];
-            for (var i = 0; i < weeks.length; i++) {
-                let _days: any = weeks[i];
-                for (var d = 0; d < _days.days.length; d++)
-                    this.lConnectedDropList.push(_days.days[d].name);
-            }
-        });
+        this.calendarService.Weeks.subscribe(weeks => this.lWeeks = weeks);
     }
 
     btnAdd_Clicked(selectedDate: Date) {
