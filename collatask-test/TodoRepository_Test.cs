@@ -26,7 +26,8 @@ namespace collatask_test
                 {
                     Description = "Todo # " + i.ToString(),
                     AddedBy = UserEmail,
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now,
+                    TodoDate = DateTime.Now
                 });
             _repository.Commit();
 
@@ -45,7 +46,8 @@ namespace collatask_test
                 {
                     Description = "Todo # " + i.ToString(),
                     AddedBy = UserEmail,
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now,
+                    TodoDate = DateTime.Now
                 });
             _repository.Commit();
             IList<TodoModel> _testData = _repository.GetAll();
@@ -82,7 +84,8 @@ namespace collatask_test
                 {
                     Description = "Todo # " + i.ToString(),
                     AddedBy = UserEmail,
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now,
+                    TodoDate = DateTime.Now
                 });
             _repository.Commit();
             IList<TodoModel> _testData = _repository.GetAll();
@@ -110,7 +113,8 @@ namespace collatask_test
                 {
                     Description = "Todo # " + i.ToString(),
                     AddedBy = UserEmail,
-                    DateAdded = DateTime.Now
+                    DateAdded = DateTime.Now,
+                    TodoDate = DateTime.Now
                 });
             _repository.Commit();
             IList<TodoModel> _testData = _repository.GetAll();
@@ -123,7 +127,8 @@ namespace collatask_test
             {
                 Description = "This has been added.",
                 AddedBy = UserEmail,
-                DateAdded = DateTime.Now
+                DateAdded = DateTime.Now,
+                TodoDate = DateTime.Now
             });
 
             _repository.Remove(_testData[_indexes.First()]._id);
