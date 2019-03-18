@@ -6,7 +6,7 @@
         </div>
     </div>
     <mat-divider></mat-divider>
-    <div fxLayout="column" fxFlexFill>
+    <div fxLayout="column" fxFlexFill cdkDropListGroup>
         <div *ngFor="let weeks of lWeeks" fxLayout="row">
             <div *ngFor="let day of weeks.days" fxLayout="column" fxFlex="14.5" fxFlexFill>
                 <div class="calendar-day-box" *ngIf="day.date.getMonth() === lCurrentDate.getMonth()">
