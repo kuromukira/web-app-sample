@@ -15,8 +15,8 @@ export class CalendarDropListComponent implements OnInit {
 
     lTodosPerDay: TodoModel[] = [];
     inProgress: boolean;
-    private lBoxDate: Date;
 
+    private lBoxDate: Date;
     @Input() set boxDate(date: Date) {
         this.lBoxDate = new Date(date);
     }
@@ -39,7 +39,9 @@ export class CalendarDropListComponent implements OnInit {
     }
 
     drop(event: CdkDragDrop<string[]>) {
-        console.log(event);
+        let _todoModel: TodoModel = JSON.parse(event.previousContainer.data[event.previousIndex]);
+        console.log(_todoModel);
+        console.log(this.lBoxDate);
     }
 
     // Possible duplicate code with home.component
