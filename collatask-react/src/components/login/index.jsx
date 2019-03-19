@@ -1,5 +1,5 @@
 import React from 'react';
-import './login.css';
+import './login.scss';
 import { Card, Tabs, Tab } from 'react-bootstrap';
 
 import { FirebaseContext } from '../../services/firebase/index';
