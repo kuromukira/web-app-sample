@@ -2,10 +2,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import AppComponent from './app.component';
+import AppComponent from './app';
 import * as serviceWorker from './serviceWorker';
 
-import FirebaseService, { FirebaseContext } from './services/firebase/_index.service';
+import FirebaseService, { FirebaseContext } from './services/firebase/index';
 
 ReactDOM.render(
     // Initialize firebase context

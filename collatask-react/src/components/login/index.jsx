@@ -1,11 +1,11 @@
 import React from 'react';
-import './login.component.css';
+import './login.css';
 import { Card, Tabs, Tab } from 'react-bootstrap';
 
-import { FirebaseContext } from '../../services/firebase/_index.service';
+import { FirebaseContext } from '../../services/firebase/index';
 
-import SignInComponent from './sign-in/sign-in.component';
-import SignUpComponent from './sign-up/sign-up.component';
+import SignInComponent from './sign-in';
+import SignUpComponent from './sign-up';
 
 export default class LoginPageComponent extends React.Component {
     render() {

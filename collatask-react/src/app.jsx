@@ -5,10 +5,10 @@ import {
 } from 'react-router-dom';
 import * as routes from './constants/routes';
 
-import NavigationComponent from './components/navigation/nav.component';
-import LandingPageComponent from './components/landing-page/landing-page.component';
-import HomePageComponent from './components/home/home.component';
-import LoginPageComponent from './components/login/login.component';
+import NavigationComponent from './components/navigation';
+import LandingPageComponent from './components/landing-page';
+import HomePageComponent from './components/home';
+import LoginPageComponent from './components/login';
 
 export default class AppComponent extends React.Component {
     render() {
