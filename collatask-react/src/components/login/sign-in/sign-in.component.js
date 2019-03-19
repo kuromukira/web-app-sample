@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import { Form, Button, ButtonGroup } from 'react-bootstrap';
 
 export default class SignInComponent extends React.Component {
     render() {
@@ -13,6 +13,10 @@ export default class SignInComponent extends React.Component {
                     <Form.Label>Password</Form.Label>
                     <Form.Control type="password" placeholder="Your password here"></Form.Control>
                 </Form.Group>
+                <ButtonGroup vertical className="d-flex">
+                    <Button variant="outline-secondary" size="sm">SIGN-IN WITH GOOGLE</Button>
+                    <Button variant="primary" size="sm" type="submit">SIGN-IN</Button>
+                </ButtonGroup>
             </Form>
         );
     }

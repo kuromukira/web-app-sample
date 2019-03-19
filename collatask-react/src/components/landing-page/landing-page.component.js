@@ -6,7 +6,7 @@ export default class LandingPageComponent extends React.Component {
     render() {
         return (
             <div>
-                <h4>Hi! Welcome to To-Do List App!</h4>
+                <h4>Hi! Welcome to <strong>Colla</strong>Task!</h4>
                 <span><Link to={routes.SIGN_IN}>Sign-In</Link> to continue...</span>
             </div>
         );

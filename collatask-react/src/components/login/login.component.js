@@ -10,7 +10,7 @@ export default class LoginPageComponent extends React.Component {
             <div className="d-flex justify-content-center">
                 <Card className="login-box-size">
                     <Card.Body>
-                        <Card.Title>To-Do List App</Card.Title>
+                        <Card.Title><strong>Colla</strong>Task</Card.Title>
                         <Card.Text>
                             <Tabs>
                                 <Tab eventKey="login" title="Sign In" className="login-tab-padding">
