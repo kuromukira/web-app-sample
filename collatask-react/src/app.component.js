@@ -10,7 +10,7 @@ import LandingPageComponent from './components/landing-page/landing-page.compone
 import HomePageComponent from './components/home/home.component';
 import LoginPageComponent from './components/login/login.component';
 
-export default class App extends React.Component {
+export default class AppComponent extends React.Component {
     render() {
         return (
             <Router>
