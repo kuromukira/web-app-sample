@@ -60,4 +60,5 @@ export default class SignUpComponent extends React.Component {
             </Form>
         );
     }
+
 }
