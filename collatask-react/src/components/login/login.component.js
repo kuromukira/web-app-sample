@@ -11,7 +11,7 @@ export default class LoginPageComponent extends React.Component {
                 <Card className="login-box-size">
                     <Card.Body>
                         <Card.Title><strong>Colla</strong>Task</Card.Title>
-                        <Card.Text>
+                        <Card.Body>
                             <Tabs>
                                 <Tab eventKey="login" title="Sign In" className="login-tab-padding">
                                     <SignInComponent></SignInComponent>
@@ -20,7 +20,7 @@ export default class LoginPageComponent extends React.Component {
                                     <SignUpComponent></SignUpComponent>
                                 </Tab>
                             </Tabs>
-                        </Card.Text>
+                        </Card.Body>
                     </Card.Body>
                 </Card>
             </div>
