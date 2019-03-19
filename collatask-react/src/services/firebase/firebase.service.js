@@ -6,7 +6,6 @@ export default class FirebaseService {
 
     constructor() {
         app.initializeApp(firebase);
-
         this.auth = app.auth();
     }
 
@@ -17,7 +16,7 @@ export default class FirebaseService {
 
     signIn = (email, password) => this.auth.signInWithEmailAndPassword(email, password);
 
-    signInGoogle = () => this.auth.signInGoogle();
+    signInGoogle = () => this.auth.signInWithPopup(new app.auth.GoogleAuthProvider());
 
     forgotPassword = (email) => this.auth.sendPasswordResetEmail(email);
 
