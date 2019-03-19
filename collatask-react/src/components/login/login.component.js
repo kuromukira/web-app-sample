@@ -1,8 +1,8 @@
 import React from 'react';
-import './login.css';
+import './login.component.css';
 import { Card, Tabs, Tab } from 'react-bootstrap';
-import SignInComponent from './sign-in/sign-in';
-import SignUpComponent from './sign-up/sign-up';
+import SignInComponent from './sign-in/sign-in.component';
+import SignUpComponent from './sign-up/sign-up.component';
 
 export default class LoginPageComponent extends React.Component {
     render() {
