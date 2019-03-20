@@ -1,4 +1,5 @@
 import React from 'react';
+import * as routes from '../../../constants/routes';
 import { Form, Button, ButtonGroup, Row } from 'react-bootstrap';
 
 const INITIAL_STATE = {
@@ -16,14 +17,16 @@ export default class SignInComponent extends React.Component {
         this.state = INITIAL_STATE;
     }
 
+    completeSignIn(email) {
+        this.setState(INITIAL_STATE);
+        this.setState({ success: 'Welcome ' + email });
+        this.props.history.push(routes.HOME);
+    }
+
     btnSignIn_Clicked = (event) => {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signIn(this.state.email, this.state.password)
-            .then(() => {
-                var email = this.state.email;
-                this.setState(INITIAL_STATE);
-                this.setState({ success: 'Welcome ' + email });
-            })
+            .then(() => this.completeSignIn(this.state.email))
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ inProgress: false }));
 
@@ -33,10 +36,7 @@ export default class SignInComponent extends React.Component {
     btnSignInGoogle_Clicked = (event) => {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signInGoogle()
-            .then(() => {
-                this.setState(INITIAL_STATE);
-                this.setState({ success: 'Welcome...' });
-            })
+            .then(() => this.completeSignIn('...'))
             .catch(error => this.setState({ error }))
             .finally(() => this.setState({ inProgress: false }));
 
