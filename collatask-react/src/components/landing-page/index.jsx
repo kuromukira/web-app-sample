@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import * as routes from '../../constants/routes';
-
+// todo: use authusercontext, and redirect to home if authenticated user is not null
 function LandingPageComponent() {
     return (
         <div>
