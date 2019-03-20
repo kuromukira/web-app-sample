@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Button, ButtonGroup, Row } from 'react-bootstrap';
+import { withFirebase } from '../../../services/firebase';
 
 const INITIAL_STATE = {
     email: '',
@@ -10,7 +11,7 @@ const INITIAL_STATE = {
     inProgress: false
 }
 
-export default class SignUpComponent extends React.Component {
+class SignUpComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -65,3 +66,5 @@ export default class SignUpComponent extends React.Component {
     }
 
 }
+
+export default withFirebase(SignUpComponent);

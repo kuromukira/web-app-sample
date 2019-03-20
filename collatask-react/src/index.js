@@ -7,6 +7,8 @@ import * as serviceWorker from './serviceWorker';
 
 import FirebaseService, { FirebaseContext } from './services/firebase/index';
 
+document.title = "To-Do List";
+
 ReactDOM.render(
     // Initialize firebase context
     <FirebaseContext.Provider value={new FirebaseService()}>

@@ -2,6 +2,7 @@ import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import * as routes from '../../constants/routes';
+import SignOutComponent from '../login/sign-out';
 
 export default class NavigationComponent extends React.Component {
     render() {
@@ -13,6 +14,7 @@ export default class NavigationComponent extends React.Component {
                     <Nav className="mr-auto">
                         <Link className="nav-item nav-link" to={routes.HOME}>Home</Link>
                         <Link className="nav-item nav-link" to={routes.SIGN_IN}>Sign In</Link>
+                        <SignOutComponent></SignOutComponent>
                     </Nav>
                 </Navbar.Collapse>
             </Navbar>

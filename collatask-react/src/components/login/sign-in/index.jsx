@@ -1,4 +1,6 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import { withFirebase } from '../../../services/firebase';
 import * as routes from '../../../constants/routes';
 import { Form, Button, ButtonGroup, Row } from 'react-bootstrap';
 
@@ -10,7 +12,7 @@ const INITIAL_STATE = {
     inProgress: false
 }
 
-export default class SignInComponent extends React.Component {
+class SignInComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -27,8 +29,7 @@ export default class SignInComponent extends React.Component {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signIn(this.state.email, this.state.password)
             .then(() => this.completeSignIn(this.state.email))
-            .catch(error => this.setState({ error }))
-            .finally(() => this.setState({ inProgress: false }));
+            .catch(error => this.setState({ error }));
 
         event.preventDefault();
     }
@@ -37,8 +38,7 @@ export default class SignInComponent extends React.Component {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signInGoogle()
             .then(() => this.completeSignIn('...'))
-            .catch(error => this.setState({ error }))
-            .finally(() => this.setState({ inProgress: false }));
+            .catch(error => this.setState({ error }));
 
         event.preventDefault();
     }
@@ -74,3 +74,5 @@ export default class SignInComponent extends React.Component {
     }
 
 }
+
+export default withRouter(withFirebase(SignInComponent));
