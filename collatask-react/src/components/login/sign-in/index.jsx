@@ -43,11 +43,22 @@ class SignInComponent extends React.Component {
         event.preventDefault();
     }
 
+    btnForgotPass_Clicked = (event) => {
+        this.setState({ error: null, success: null, inProgress: true });
+        this.props.firebase.forgotPassword(this.state.email)
+            .then(() => this.setState({ success: 'Password reset link has been sent to ' + this.state.email }))
+            .catch(error => this.setState({ error }))
+            .finally(() => this.setState({ inProgress: false }));
+
+        event.preventDefault();
+    }
+
     // Change the value inside the state
     onStateChange = (event) => this.setState({ [event.target.name]: event.target.value, success: null, error: null, inProgress: false });
 
     // Validate if the current state is valid for submit
     isStateInvalid = () => this.state.password === '' || this.state.email === '' || this.state.password.length < 6 || this.state.inProgress;
+    isEmailInvalid = () => this.state.email === '' || this.state.inProgress;
 
     render() {
         return (
@@ -66,6 +77,7 @@ class SignInComponent extends React.Component {
                     {this.state.error && <div className="flex-fill alert alert-danger" role="alert">{this.state.error.message}</div>}
                 </div>
                 <ButtonGroup as={Row} vertical className="d-flex">
+                    <Button variant="outline-info" size="sm" onClick={this.btnForgotPass_Clicked} disabled={this.isEmailInvalid()}>FORGOT PASSWORD</Button>
                     <Button variant="outline-secondary" size="sm" onClick={this.btnSignInGoogle_Clicked} disabled={this.state.inProgress}>SIGN-IN WITH GOOGLE</Button>
                     <Button variant="primary" size="sm" type="submit" disabled={this.isStateInvalid()}>SIGN-IN</Button>
                 </ButtonGroup>

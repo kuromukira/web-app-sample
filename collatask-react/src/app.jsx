@@ -9,12 +9,29 @@ import NavigationComponent from './components/navigation';
 import LandingPageComponent from './components/landing-page';
 import HomePageComponent from './components/home';
 import LoginPageComponent from './components/login';
+import { withFirebase } from './services/firebase';
 
-export default class AppComponent extends React.Component {
+class AppComponent extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { authUser: null }
+    }
+
+    componentDidMount() {
+        this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
+            authUser ? this.setState({ authUser }) : this.setState({ authUser: null });
+        });
+    }
+
+    componentWillUnmount() {
+        this.listener();
+    }
+
     render() {
         return (
             <Router>
-                <NavigationComponent />
+                <NavigationComponent authUser={this.state.authUser} />
                 <div className="main-body-padding">
                     <Route exact path={routes.LANDING} component={LandingPageComponent} />
                     <Route exact path={routes.HOME} component={HomePageComponent} />
@@ -24,3 +41,5 @@ export default class AppComponent extends React.Component {
         );
     }
 }
+
+export default withFirebase(AppComponent);

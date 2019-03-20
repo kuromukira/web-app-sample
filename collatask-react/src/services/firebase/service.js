@@ -20,6 +20,6 @@ export default class FirebaseService {
 
     forgotPassword = (email) => this.auth.sendPasswordResetEmail(email);
 
-    signOut = () => this.auth.signOut();
+    signOutUser = () => this.auth.signOut();
 
 }
