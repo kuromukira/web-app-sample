@@ -1,4 +1,4 @@
-import './login.scss';
+import './index.scss';
 import React from 'react';
 import { Card, Tabs, Tab } from 'react-bootstrap';
 import SignInComponent from './sign-in';
