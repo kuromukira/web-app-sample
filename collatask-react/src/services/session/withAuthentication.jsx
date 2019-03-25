@@ -1,6 +1,7 @@
 import React from 'react';
 import AuthUserContext from './context';
 import { withFirebase } from '../firebase';
+import { localStoreKeys } from '../../constants/config'
 
 const withAuthentication = Component => {
     class WithAuthentication extends React.Component {
@@ -13,6 +14,11 @@ const withAuthentication = Component => {
             // listen for firebase auth changes
             this.listener = this.props.firebase.auth.onAuthStateChanged(authUser => {
                 authUser ? this.setState({ authUser }) : this.setState({ authUser: null });
+                // save token in localstorage
+                authUser ?
+                    this.props.firebase.getToken()
+                        .then((token) => localStorage.setItem(localStoreKeys.token, token))
+                    : localStorage.removeItem(localStoreKeys.token);
             });
         }
 

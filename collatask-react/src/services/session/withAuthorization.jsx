@@ -3,6 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { withFirebase } from '../firebase';
 import AuthUserContext from './context';
 import * as ROUTES from '../../constants/routes';
+import { localStoreKeys } from '../../constants/config'
 
 const withAuthorization = condition => Component => {
     class WithAuthorization extends React.Component {
@@ -10,9 +11,10 @@ const withAuthorization = condition => Component => {
             // listen for firebase auth changes
             this.listener = this.props.firebase.auth.onAuthStateChanged(
                 authUser => {
-                    if (!condition(authUser)) {
+                    if (!condition(authUser))
                         this.props.history.push(ROUTES.SIGN_IN);
-                    }
+                    // remove token in localstorage
+                    else localStorage.removeItem(localStoreKeys.token);
                 },
             );
         }

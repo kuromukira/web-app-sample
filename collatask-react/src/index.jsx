@@ -2,17 +2,20 @@ import 'bootstrap/dist/css/bootstrap.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.scss';
-import AppComponent from './app';
+import AppComponent from './components/app';
 import * as serviceWorker from './serviceWorker';
 
-import FirebaseService, { FirebaseContext } from './services/firebase/index';
+import FirebaseService, { FirebaseContext } from './services/firebase';
+import TodoService, { TodoContext } from './services/todo';
 
 document.title = "To-Do List";
 
 ReactDOM.render(
     // Initialize firebase context
     <FirebaseContext.Provider value={new FirebaseService()}>
-        <AppComponent />
+        <TodoContext.Provider value={new TodoService()}>
+            <AppComponent />
+        </TodoContext.Provider>
     </FirebaseContext.Provider>,
     document.getElementById('root')
 );

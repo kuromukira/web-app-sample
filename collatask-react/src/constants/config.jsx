@@ -6,3 +6,7 @@ export const firebase = {
     storageBucket: "",
     messagingSenderId: "554758311835"
 }
+
+export const localStoreKeys = {
+    token: 'authUserToken'
+}

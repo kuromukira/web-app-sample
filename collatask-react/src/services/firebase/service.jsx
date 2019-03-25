@@ -22,4 +22,9 @@ export default class FirebaseService {
 
     signOutUser = () => this.auth.signOut();
 
+    getToken = async () => {
+        const data = await this.auth.currentUser.getIdToken();
+        return data;
+    }
+
 }
