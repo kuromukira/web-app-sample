@@ -31,6 +31,28 @@ export default class TodoService {
         return result.json();
     }
 
+    complete = async (id) => {
+        const result = await fetch(this.API_URL + 'api/Todo/complete?id=' + id, {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.TOKEN
+            }
+        })
+        return result;
+    }
+
+    remove = async (id) => {
+        const result = await fetch(this.API_URL + 'api/Todo/remove?id=' + id, {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.TOKEN
+            }
+        })
+        return result;
+    }
+
     /**
      * api/Todo/save
      * api/Todo/modify
