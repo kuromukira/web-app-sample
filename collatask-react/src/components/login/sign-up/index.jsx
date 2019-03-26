@@ -21,13 +21,8 @@ class SignUpComponent extends React.Component {
     btnSignUp_Clicked = (event) => {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signUp(this.state.email, this.state.password)
-            .then(() => {
-                var email = this.state.email;
-                this.setState(INITIAL_STATE);
-                this.setState({ success: 'An email verification link has been sent to ' + email });
-            })
-            .catch(error => this.setState({ error }))
-            .finally(() => this.setState({ inProgress: false }));
+            .then(() => { })
+            .catch(error => this.setState({ error, inProgress: false }));
 
         event.preventDefault();
     }

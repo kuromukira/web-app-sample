@@ -29,7 +29,7 @@ class SignInComponent extends React.Component {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signIn(this.state.email, this.state.password)
             .then(() => this.completeSignIn(this.state.email))
-            .catch(error => this.setState({ error }));
+            .catch(error => this.setState({ error, success: null, inProgress: false }));
 
         event.preventDefault();
     }
@@ -38,7 +38,7 @@ class SignInComponent extends React.Component {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.signInGoogle()
             .then(() => this.completeSignIn('...'))
-            .catch(error => this.setState({ error }));
+            .catch(error => this.setState({ error, success: null, inProgress: false }));
 
         event.preventDefault();
     }
@@ -47,7 +47,7 @@ class SignInComponent extends React.Component {
         this.setState({ error: null, success: null, inProgress: true });
         this.props.firebase.forgotPassword(this.state.email)
             .then(() => this.setState({ success: 'Password reset link has been sent to ' + this.state.email }))
-            .catch(error => this.setState({ error }))
+            .catch(error => this.setState({ error, success: null, inProgress: false }))
             .finally(() => this.setState({ inProgress: false }));
 
         event.preventDefault();
