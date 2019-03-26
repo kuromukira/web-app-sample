@@ -1,8 +1,8 @@
 import React from 'react';
-import { Button, Modal } from 'react-bootstrap';
 import { Link, withRouter } from 'react-router-dom';
 import * as routes from '../../../constants/routes'
 import { withFirebase } from '../../../services/firebase';
+import DialogPromptComponent from '../../dialog/prompt';
 
 class SignOutComponent extends React.Component {
 
@@ -34,19 +34,13 @@ class SignOutComponent extends React.Component {
         return (
             <div>
                 <Link className="nav-item nav-link" onClick={this.btnShowDialog_Clicked} to={routes.SIGN_IN}>Sign Out</Link>
-                <Modal size="sm" show={this.state.dialogOpen}>
-                    <Modal.Header>
-                        <Modal.Title>Confirm</Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body className="d-flex">
-                        <span>Are you sure you want to sign-out?</span>
-                        {this.state.error && <div className="flex-fill alert alert-danger" role="alert">{this.state.error.message}</div>}
-                    </Modal.Body>
-                    <Modal.Footer>
-                        <Button variant="danger" onClick={this.btnCloseDialog_Clicked}>No</Button>
-                        <Button variant="primary" onClick={this.btnSignOut_Clicked}>Yes</Button>
-                    </Modal.Footer>
-                </Modal>
+                <DialogPromptComponent
+                    dialogShow={this.state.dialogOpen}
+                    dialogClose={() => this.setState({ dialogOpen: false })}
+                    targetMethod={this.btnSignOut_Clicked}
+                    dialogMsg="Are you sure you want to sign-out?"
+                    error={this.state.error}
+                ></DialogPromptComponent>
             </div>
         );
     }
