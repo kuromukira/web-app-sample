@@ -27,4 +27,6 @@ export default class FirebaseService {
         return data;
     }
 
+    getUserEmail = async () => this.auth.currentUser.email;
+
 }

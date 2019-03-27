@@ -53,12 +53,44 @@ export default class TodoService {
         return result;
     }
 
+    save = async (todo) => {
+        const result = await fetch(this.API_URL + 'api/Todo/save', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.TOKEN
+            },
+            body: JSON.stringify({
+                "description": todo.description,
+                "addedBy": todo.addedBy,
+                "todoDate": todo.todoDate,
+                "currentUser": todo.currentUser,
+                "isCompleted": todo.isCompleted
+            })
+        })
+        return result;
+    }
+
+    modify = async (todo) => {
+        const result = await fetch(this.API_URL + 'api/Todo/modify', {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + this.TOKEN
+            },
+            body: JSON.stringify({
+                "todoId": todo.todoId,
+                "description": todo.description,
+                "addedBy": todo.addedBy,
+                "todoDate": todo.todoDate,
+                "currentUser": todo.currentUser,
+                "isCompleted": todo.isCompleted
+            })
+        })
+        return result;
+    }
+
     /**
-     * api/Todo/save
-     * api/Todo/modify
-     * api/Todo/remove?id=
-     * api/Todo/complete?id=
-     * 
      * api/SubTodo/getsubof
      * api/SubTodo/get
      * api/SubTodo/save

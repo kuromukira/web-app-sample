@@ -19,6 +19,11 @@ const withAuthentication = Component => {
                     this.props.firebase.getToken()
                         .then((token) => localStorage.setItem(localStoreKeys.token, token))
                     : localStorage.removeItem(localStoreKeys.token);
+                // save user email
+                authUser ?
+                    this.props.firebase.getUserEmail()
+                        .then((email) => localStorage.setItem(localStoreKeys.email, email))
+                    : localStorage.removeItem(localStoreKeys.email);
             });
         }
 

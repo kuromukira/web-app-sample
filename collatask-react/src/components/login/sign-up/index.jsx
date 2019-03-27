@@ -37,16 +37,16 @@ class SignUpComponent extends React.Component {
         return (
             <Form onSubmit={this.btnSignUp_Clicked}>
                 <Form.Group as={Row}>
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="email" name="email" disabled={this.state.inProgress} value={this.state.email} placeholder="name@example.com" onChange={this.onStateChange}></Form.Control>
+                    <Form.Label><strong>Email Address</strong></Form.Label>
+                    <Form.Control size="sm" type="email" name="email" disabled={this.state.inProgress} value={this.state.email} placeholder="name@example.com" onChange={this.onStateChange}></Form.Control>
                 </Form.Group>
                 <Form.Group as={Row}>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" name="password" disabled={this.state.inProgress} value={this.state.password} placeholder="Must be 6 characters or more" onChange={this.onStateChange}></Form.Control>
+                    <Form.Label><strong>Password</strong></Form.Label>
+                    <Form.Control size="sm" type="password" name="password" disabled={this.state.inProgress} value={this.state.password} placeholder="Must be 6 characters or more" onChange={this.onStateChange}></Form.Control>
                 </Form.Group>
                 <Form.Group as={Row}>
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control type="password" name="confirmPassword" disabled={this.state.inProgress} value={this.state.confirmPassword} placeholder="Confirm your password here" onChange={this.onStateChange}></Form.Control>
+                    <Form.Label><strong>Confirm Password</strong></Form.Label>
+                    <Form.Control size="sm" type="password" name="confirmPassword" disabled={this.state.inProgress} value={this.state.confirmPassword} placeholder="Confirm your password here" onChange={this.onStateChange}></Form.Control>
                 </Form.Group>
                 <div className="d-flex">
                     {this.state.inProgress && <div className="flex-fill alert alert-primary" role="alert">Please wait...</div>}

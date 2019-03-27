@@ -9,7 +9,7 @@ class DialogPromptComponent extends React.Component {
 
     render() {
         return (
-            <Modal size="sm" show={this.props.dialogShow}>
+            <Modal size="sm" centered show={this.props.dialogShow}>
                 <Modal.Header>
                     <Modal.Title>Confirm</Modal.Title>
                 </Modal.Header>
@@ -18,8 +18,8 @@ class DialogPromptComponent extends React.Component {
                     {this.props.error && <div className="flex-fill alert alert-danger" role="alert">{this.props.error.message}</div>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" onClick={this.btnCloseDialog_Clicked}>No</Button>
-                    <Button variant="primary" onClick={this.btnConfirm_Clicked}>Yes</Button>
+                    <Button variant="danger" size="sm" onClick={this.btnCloseDialog_Clicked}>No</Button>
+                    <Button variant="primary" size="sm" onClick={this.btnConfirm_Clicked}>Yes</Button>
                 </Modal.Footer>
             </Modal>
         );

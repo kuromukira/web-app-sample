@@ -8,5 +8,6 @@ export const firebase = {
 }
 
 export const localStoreKeys = {
-    token: 'authUserToken'
+    token: 'authUserToken',
+    email: 'authUserEmail'
 }

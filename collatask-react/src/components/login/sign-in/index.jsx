@@ -64,12 +64,12 @@ class SignInComponent extends React.Component {
         return (
             <Form onSubmit={this.btnSignIn_Clicked}>
                 <Form.Group as={Row} controlId="login.email">
-                    <Form.Label>Email Address</Form.Label>
-                    <Form.Control type="email" disabled={this.state.inProgress} name="email" value={this.state.email} onChange={this.onStateChange} placeholder="name@example.com"></Form.Control>
+                    <Form.Label><strong>Email Address</strong></Form.Label>
+                    <Form.Control size="sm" type="email" disabled={this.state.inProgress} name="email" value={this.state.email} onChange={this.onStateChange} placeholder="name@example.com"></Form.Control>
                 </Form.Group>
                 <Form.Group as={Row} controlId="login.password">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" disabled={this.state.inProgress} name="password" value={this.state.password} onChange={this.onStateChange} placeholder="Your password here"></Form.Control>
+                    <Form.Label><strong>Password</strong></Form.Label>
+                    <Form.Control size="sm" type="password" disabled={this.state.inProgress} name="password" value={this.state.password} onChange={this.onStateChange} placeholder="Your password here"></Form.Control>
                 </Form.Group>
                 <div className="d-flex">
                     {this.state.inProgress && <div className="flex-fill alert alert-primary" role="alert">Please wait...</div>}
