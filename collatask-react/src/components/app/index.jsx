@@ -6,7 +6,6 @@ import {
 import * as routes from '../../constants/routes';
 
 import NavigationComponent from '../navigation';
-import LandingPageComponent from '../landing-page';
 import HomePageComponent from '../home';
 import LoginPageComponent from '../login';
 import { withAuthentication } from '../../services/session';
@@ -16,7 +15,7 @@ function AppComponent() {
         <Router>
             <NavigationComponent />
             <div className="main-body-padding">
-                <Route exact path={routes.LANDING} component={LandingPageComponent} />
+                <Route exact path={routes.LANDING} component={LoginPageComponent} />
                 <Route exact path={routes.HOME} component={HomePageComponent} />
                 <Route exact path={routes.SIGN_IN} component={LoginPageComponent} />
             </div>
