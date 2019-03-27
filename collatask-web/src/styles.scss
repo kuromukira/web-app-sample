@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+
+.collatask-no-margin {
+    margin: 0% !important;
+}
+
+.collatask-content-padding {
+    padding: 16px;
+}
+
+.collatask-default-bg {
+    background-color: lightgray !important;
+}
+
+.collatask-toolbar-fixed {
+    position: sticky; /* IE does not support this */
+    position: -webkit-sticky; /* For macOS/iOS Safari */
+    top: 0;
+    z-index: 500;
+}

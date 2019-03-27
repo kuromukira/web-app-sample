@@ -1,0 +1,18 @@
+<div cdkDropList class="drag-list" [cdkDropListData]="lTodosPerDay" (cdkDropListDropped)="drop($event)">
+    <div class="drag-box" *ngFor="let todo of lTodosPerDay" cdkDrag [cdkDragDisabled]="todo.isCompleted">
+        <button mat-button [matMenuTriggerFor]="menu" fxFlexFill [ngClass]="{ 'todo-complete' : todo.isCompleted }">
+            {{ todo.description | slice:0:9 }}<span *ngIf="todo.description.length > 9">...</span>
+        </button>
+        <mat-menu #menu="matMenu">
+            <button mat-menu-item (click)="btnInfo_Clicked(todo.todoId)">
+                <span>Details</span>
+            </button>
+            <button mat-menu-item (click)="btnDelete_Clicked(todo.todoId)">
+                <span>Delete</span>
+            </button>
+            <button mat-menu-item *ngIf="!todo.isCompleted" (click)="btnComplete_Clicked(todo.todoId)">
+                <span>Complete</span>
+            </button>
+        </mat-menu>
+    </div>
+</div>

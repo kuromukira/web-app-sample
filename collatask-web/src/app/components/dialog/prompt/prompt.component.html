@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ data.Header }}</h1>
+<div mat-dialog-content fxLayout="column">
+    <p>{{ data.Message }}</p>
+</div>
+<div mat-dialog-actions fxLayoutAlign="end center" fxLayoutGap="1%">
+    <button mat-button color="warn" (click)="onNoClick()">No thanks</button>
+    <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Yes please</button>
+</div>

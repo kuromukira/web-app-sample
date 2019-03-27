@@ -1,0 +1,25 @@
+<button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+</button>
+<mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="btnHome_Click()">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+    </button>
+    <button mat-menu-item (click)="btnCalendar_Click()">
+        <mat-icon>event</mat-icon>
+        <span>Calendar</span>
+    </button>
+    <button mat-menu-item (click)="btnAdd_Clicked()">
+        <mat-icon>add</mat-icon>
+        <span>New To-Do</span>
+    </button>
+    <button mat-menu-item (click)="btnRefresh_Clicked()">
+        <mat-icon>refresh</mat-icon>
+        <span>Refresh</span>
+    </button>
+    <button mat-menu-item (click)="btnSignOut_Clicked()">
+        <mat-icon>exit_to_app</mat-icon>
+        <span>Sign Out</span>
+    </button>
+</mat-menu>

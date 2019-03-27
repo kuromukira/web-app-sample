@@ -1,0 +1,17 @@
+<mat-toolbar color="primary" class="collatask-toolbar-fixed mat-elevation-z2">
+    <mat-toolbar-row>
+        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="20" fxLayoutGap="1.5%">
+            <button mat-icon-button (click)="btnPrevMonth_Clicked()">
+                <mat-icon>keyboard_arrow_left</mat-icon>
+            </button>
+            <h1>{{ lCurrentDate | date:'MMMM yyyy' }}</h1>
+            <button mat-icon-button (click)="btnNextMonth_Clicked()">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </button>
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="1%" fxFlex>
+            <nav-buttons></nav-buttons>
+        </div>
+    </mat-toolbar-row>
+    <mat-progress-bar color="accent" *ngIf="inProgress" mode="indeterminate"></mat-progress-bar>
+</mat-toolbar>
