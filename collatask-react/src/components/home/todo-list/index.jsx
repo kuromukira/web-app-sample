@@ -22,7 +22,7 @@ class TodoListComponent extends React.Component {
                                     {todo.description}
                                 </Col>
                                 <Col xs className="text-right">
-                                    <ModifyButtonComponent reloadTodos={this.props.reloadTodos} />
+                                    <ModifyButtonComponent todoId={todo.todoId} reloadTodos={this.props.reloadTodos} />
                                     {!todo.isCompleted && <CompleteButtonComponent reloadTodos={this.props.reloadTodos} todoId={todo.todoId} />}
                                     <RemoveButtonComponoent reloadTodos={this.props.reloadTodos} todoId={todo.todoId} />
                                 </Col>

@@ -73,7 +73,7 @@ export default class TodoService {
 
     modify = async (todo) => {
         const result = await fetch(this.API_URL + 'api/Todo/modify', {
-            method: 'POST',
+            method: 'PUT',
             headers: {
                 "Content-Type": "application/json",
                 "Authorization": "Bearer " + this.TOKEN
