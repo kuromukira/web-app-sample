@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import ManageDialogComponent from '../manage-dialog';
 import { withTodoService } from '../../../../services/todo';
@@ -37,7 +38,7 @@ class ModifyButtonComponent extends React.Component {
                     todoId: todo.todoId,
                     description: todo.description,
                     addedBy: todo.addedBy,
-                    // todoDate: Date(todo.todoDate),
+                    todoDate: moment(todo.todoDate).format('YYYY-MM-DD'),
                     isCompleted: todo.isCompleted,
                 });
             })
