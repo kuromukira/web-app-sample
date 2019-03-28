@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatSnackBar, MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
 import { TodoModel } from 'src/app/models/todo.model';
@@ -11,7 +11,7 @@ import { DayDate } from 'src/app/models/calendar.model';
     selector: 'nav-buttons',
     templateUrl: './nav.component.html'
 })
-export class NavButtonsComponent implements OnInit, OnDestroy {
+export class NavButtonsComponent implements OnInit {
 
     inProgress: boolean = false;
     lTodos: TodoModel[] = [];
@@ -27,22 +27,6 @@ export class NavButtonsComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.todoService.$_inProgress.subscribe(data => this.inProgress = data);
         this.btnRefresh_Clicked();
-
-        // ! SignalR
-        this.signalRService.startConnection();
-        this.signalRService.addNotifEventHandler();
-        this.signalRService.$_notifcation.subscribe(notif => {
-            if (notif !== null && notif !== undefined) {
-                if (notif.message !== undefined && notif.message !== null && notif.message !== '')
-                    this.snackbar.open(notif.message, '', { duration: 4000 });
-                if (notif.refresh)
-                    this.btnRefresh_Clicked();
-            }
-        });
-    }
-
-    ngOnDestroy() {
-        this.signalRService.stopConnection();
     }
 
     btnSignOut_Clicked() {
@@ -51,8 +35,10 @@ export class NavButtonsComponent implements OnInit, OnDestroy {
                 if (result) {
                     this.inProgress = true;
                     this.authService.signOut().then((result) => {
-                        if (result.success)
+                        if (result.success) {
+                            this.signalRService.stopConnection();
                             this.router.navigateByUrl('/login');
+                        }
                         else this.snackbar.open(result.message, '', { duration: 4000 });
                     }).finally(() => this.inProgress = false);
                 }

@@ -28,6 +28,7 @@ export class SignalRService {
     public stopConnection = () => {
         this.hubConnection.stop()
             .then(() => {
+                this.$_notifcation = new BehaviorSubject(new NotificationResult());
                 this.hubConnected.next(false);
                 console.log('Connection stopped');
             })
