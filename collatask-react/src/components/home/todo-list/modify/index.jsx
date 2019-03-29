@@ -12,6 +12,7 @@ const INITIAL_STATE = {
     currentUser: localStorage.getItem(localStoreKeys.email),
     todoDate: '',
     isCompleted: false,
+    sub: [],
     // not related to todos model
     dialogShow: false,
     error: null,
@@ -40,6 +41,7 @@ class ModifyButtonComponent extends React.Component {
                     addedBy: todo.addedBy,
                     todoDate: moment(todo.todoDate).format('YYYY-MM-DD'),
                     isCompleted: todo.isCompleted,
+                    sub: todo.sub
                 });
             })
             .catch((error) => this.setState({ error }))

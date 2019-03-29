@@ -1,5 +1,6 @@
+import './index.scss';
 import React from 'react';
-import { Button, Container, Form, Row, Modal } from 'react-bootstrap';
+import { Button, Container, Form, Row, Modal, Tabs, Tab } from 'react-bootstrap';
 
 class ManageDialogComponent extends React.Component {
 
@@ -7,26 +8,33 @@ class ManageDialogComponent extends React.Component {
 
     render() {
         return (
-            <Modal size="sm" centered show={this.props.state.dialogShow}>
+            <Modal size="md" centered show={this.props.state.dialogShow}>
                 <Modal.Header>
                     <Modal.Title>{this.props.title}</Modal.Title>
                 </Modal.Header>
-                <Modal.Body className="d-flex">
+                <Modal.Body className="d-inline-flex p-2">
                     <Container>
-                        <Form onSubmit={this.props.confirmDialog}>
-                            <Form.Group as={Row} controlId="todo.description">
-                                <Form.Label><strong>Desciption</strong></Form.Label>
-                                <Form.Control size="sm" type="text" disabled={this.props.state.inProgress} name="description" value={this.props.state.description} onChange={this.props.fieldChange} placeholder="Description"></Form.Control>
-                            </Form.Group>
-                            <Form.Group as={Row} controlId="todo.addedBy">
-                                <Form.Label><strong>Added By</strong></Form.Label>
-                                <Form.Control size="sm" type="email" disabled name="addedBy" value={this.props.state.addedBy} onChange={this.props.fieldChange} placeholder="Added By"></Form.Control>
-                            </Form.Group>
-                            <Form.Group as={Row} controlId="todo.todoDate">
-                                <Form.Label><strong>Date</strong></Form.Label>
-                                <Form.Control size="sm" type="date" disabled={this.props.state.inProgress} name="todoDate" value={this.props.state.todoDate} onChange={this.props.fieldChange} placeholder="Date"></Form.Control>
-                            </Form.Group>
-                        </Form>
+                        <Tabs>
+                            <Tab eventKey="infoTab" title="Info" className="tab-content-padding">
+                                <Form onSubmit={this.props.confirmDialog}>
+                                    <Form.Group as={Row} controlId="todo.description">
+                                        <Form.Label><strong>Desciption</strong></Form.Label>
+                                        <Form.Control size="sm" type="text" disabled={this.props.state.inProgress} name="description" value={this.props.state.description} onChange={this.props.fieldChange} placeholder="Description"></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Row} controlId="todo.addedBy">
+                                        <Form.Label><strong>Added By</strong></Form.Label>
+                                        <Form.Control size="sm" type="email" disabled name="addedBy" value={this.props.state.addedBy} onChange={this.props.fieldChange} placeholder="Added By"></Form.Control>
+                                    </Form.Group>
+                                    <Form.Group as={Row} controlId="todo.todoDate">
+                                        <Form.Label><strong>Date</strong></Form.Label>
+                                        <Form.Control size="sm" type="date" disabled={this.props.state.inProgress} name="todoDate" value={this.props.state.todoDate} onChange={this.props.fieldChange} placeholder="Date"></Form.Control>
+                                    </Form.Group>
+                                </Form>
+                            </Tab>
+                            <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding">
+
+                            </Tab>
+                        </Tabs>
                     </Container>
                     {this.props.state.error && <div className="flex-fill alert alert-danger" role="alert">{this.props.state.error.message}</div>}
                 </Modal.Body>
