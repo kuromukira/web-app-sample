@@ -1,8 +1,8 @@
 import React from 'react';
 import { Row, Col, ListGroup } from 'react-bootstrap';
-import CompleteButtonComponent from './complete';
-import RemoveButtonComponoent from './delete';
-import ModifyButtonComponent from './modify';
+import ModifyButtonComponent from '../modify';
+import RemoveButtonComponoent from '../../shared/delete';
+import CompleteButtonComponent from '../../shared/complete';
 
 class TodoListComponent extends React.Component {
 
