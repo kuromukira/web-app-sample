@@ -2,8 +2,8 @@ import React from 'react';
 import { Row, Col, Button, Container } from 'react-bootstrap';
 import { withAuthorization } from '../../services/session';
 import { withTodoService } from '../../services/todo';
-import TodoListComponent from '../home/todo/list';
-import CreateTodoComponent from '../home/todo/create';
+import TodoListComponent from '../manage/todo/list';
+import CreateTodoComponent from '../manage/todo/create';
 
 class HomePageComponent extends React.Component {
 

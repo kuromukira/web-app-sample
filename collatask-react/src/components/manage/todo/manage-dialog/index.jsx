@@ -1,6 +1,6 @@
 import './index.scss';
 import React from 'react';
-import SubTodoComponent from '../../../home/sub-todo';
+import SubTodoComponent from '../../sub-todo';
 import { Button, Container, Form, Row, Modal, Tabs, Tab } from 'react-bootstrap';
 
 class ManageDialogComponent extends React.Component {
