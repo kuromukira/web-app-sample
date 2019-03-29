@@ -39,14 +39,6 @@ class ManageSubTodoComponent extends React.Component {
         this.props.closeDialog();
     }
 
-    componentDidMount() {
-        console.log("MODAL MOUNT");
-    }
-
-    componentWillUnmount() {
-        console.log("MODAL UNMOUNT");
-    }
-
     btnSave_Clicked = (ev) => {
         this.setState({ inProgress: true });
         if (this.props.model !== undefined && this.props.model !== null)
