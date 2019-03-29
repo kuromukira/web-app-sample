@@ -1,6 +1,6 @@
 import React from 'react';
 import SubTodoListComponent from './list';
-import ManageSubTodoComponent from './manage-dialog';
+import CreateSubTodoComponent from './create';
 import { withTodoService } from '../../../services/todo';
 import { Button, Row, Container, Col } from 'react-bootstrap';
 
@@ -19,16 +19,12 @@ class SubTodoComponent extends React.Component {
             .finally(() => this.setState({ inProgress: false }));
     }
 
-    btnNew_Clicked = () => this.setState({ dialogShow: true });
-
-    btnCloseNew_Clicked = () => this.setState({ dialogShow: false });
-
     render() {
         return (
             <Container>
                 <Row className="text-right">
                     <Col xs>
-                        <Button variant="outline-info" size="sm" disabled={this.state.inProgress} onClick={this.btnNew_Clicked}>New</Button>
+                        {!this.props.completed && <CreateSubTodoComponent reloadTodos={this.btnReloadSubs_Clicked} parentId={this.props.parentId} parentLoading={this.state.inProgress} />}
                         <Button variant="outline-dark" size="sm" disabled={this.state.inProgress} onClick={this.btnReloadSubs_Clicked}>Refresh</Button>
                     </Col>
                 </Row>
@@ -42,15 +38,6 @@ class SubTodoComponent extends React.Component {
                         </SubTodoListComponent>
                     </Col>
                 </Row>
-                <span>
-                    <ManageSubTodoComponent
-                        title="New Sub-Todo"
-                        dialogShow={this.state.dialogShow}
-                        closeDialog={this.btnCloseNew_Clicked}
-                        reloadSubTodo={this.btnReloadSubs_Clicked}
-                        parentTodoId={this.props.parentId}>
-                    </ManageSubTodoComponent>
-                </span>
             </Container>
         );
     }

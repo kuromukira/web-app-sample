@@ -20,7 +20,7 @@ class ManageDialogComponent extends React.Component {
                                 <Form onSubmit={this.props.confirmDialog}>
                                     <Form.Group as={Row} controlId="todo.description">
                                         <Form.Label><strong>Desciption</strong></Form.Label>
-                                        <Form.Control size="sm" type="text" disabled={this.props.state.inProgress} name="description" value={this.props.state.description} onChange={this.props.fieldChange} placeholder="Description"></Form.Control>
+                                        <Form.Control size="sm" type="text" disabled={this.props.state.inProgress || this.props.state.isCompleted} name="description" value={this.props.state.description} onChange={this.props.fieldChange} placeholder="Description"></Form.Control>
                                     </Form.Group>
                                     <Form.Group as={Row} controlId="todo.addedBy">
                                         <Form.Label><strong>Added By</strong></Form.Label>
@@ -28,7 +28,7 @@ class ManageDialogComponent extends React.Component {
                                     </Form.Group>
                                     <Form.Group as={Row} controlId="todo.todoDate">
                                         <Form.Label><strong>Date</strong></Form.Label>
-                                        <Form.Control size="sm" type="date" disabled={this.props.state.inProgress} name="todoDate" value={this.props.state.todoDate} onChange={this.props.fieldChange} placeholder="Date"></Form.Control>
+                                        <Form.Control size="sm" type="date" disabled={this.props.state.inProgress || this.props.state.isCompleted} name="todoDate" value={this.props.state.todoDate} onChange={this.props.fieldChange} placeholder="Date"></Form.Control>
                                     </Form.Group>
                                 </Form>
                             </Tab>
@@ -36,6 +36,7 @@ class ManageDialogComponent extends React.Component {
                                 <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding">
                                     <SubTodoComponent
                                         parentId={this.props.state.todoId}
+                                        completed={this.props.state.isCompleted}
                                         subs={this.props.state.sub}
                                         inProgress={this.props.state.inProgress}
                                     ></SubTodoComponent>
@@ -47,7 +48,7 @@ class ManageDialogComponent extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="danger" size="sm" disabled={this.props.state.inProgress} onClick={this.props.closeDialog}>Cancel</Button>
-                    <Button variant="primary" size="sm" disabled={this.isStateInvalid()} onClick={this.props.confirmDialog}>Confirm</Button>
+                    {!this.props.state.isCompleted && <Button variant="primary" size="sm" disabled={this.isStateInvalid()} onClick={this.props.confirmDialog}>Confirm</Button>}
                 </Modal.Footer>
             </Modal>
         )

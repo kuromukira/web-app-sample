@@ -2,8 +2,8 @@ import './index.scss';
 import React from 'react';
 import CompleteButtonComponent from '../../shared/complete';
 import RemoveButtonComponoent from '../../shared/delete';
-import ManageSubTodoComponent from '../manage-dialog';
-import { ListGroup, Row, Col, Button } from 'react-bootstrap';
+import ModifySubTodoComponent from '../modify';
+import { ListGroup, Row, Col } from 'react-bootstrap';
 
 class SubTodoListComponent extends React.Component {
 
@@ -30,7 +30,12 @@ class SubTodoListComponent extends React.Component {
                                 </Row>
                                 <Row>
                                     <Col xs className="text-right">
-                                        {!todo.isCompleted && <Button variant="outline-secondary" size="sm" disabled={this.props.parentLoading} onClick={(e) => this.btnModify_Clicked(todo, e)}>Modify</Button>}
+                                        {!todo.isCompleted &&
+                                            <ModifySubTodoComponent
+                                                todoId={todo.todoId}
+                                                parentLoading={this.props.parentLoading}
+                                                reloadSubTodo={this.props.reloadSubTodo} />
+                                        }
                                         {!todo.isCompleted &&
                                             <CompleteButtonComponent
                                                 reloadTodos={this.props.reloadSubTodo}
@@ -47,16 +52,6 @@ class SubTodoListComponent extends React.Component {
                         ))
                     }
                 </ListGroup>
-                <span>
-                    <ManageSubTodoComponent
-                        title="Edit Sub-Todo"
-                        model={this.state.todo}
-                        parentTodoId={this.props.parentTodoId}
-                        dialogShow={this.state.dialogShow}
-                        reloadSubTodo={this.props.reloadSubTodo}
-                        closeDialog={this.btnCloseModify_Clicked}>
-                    </ManageSubTodoComponent>
-                </span>
             </div>
         );
     }

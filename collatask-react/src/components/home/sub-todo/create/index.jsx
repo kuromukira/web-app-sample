@@ -1,12 +1,11 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
-import ManageDialogComponent from '../manage-dialog';
+import ManageSubTodoComponent from '../manage-dialog';
 import { withTodoService } from '../../../../services/todo';
 
 const INITIAL_STATE = {
-    todoId: '',
     description: '',
-    todoDate: '',
+    parentTodoId: '',
     isCompleted: false,
     // not related to todos model
     dialogShow: false,
@@ -14,14 +13,14 @@ const INITIAL_STATE = {
     inProgress: false
 }
 
-class CreateTodoComponent extends React.Component {
+class CreateSubTodoComponent extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = INITIAL_STATE;
     }
 
-    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, error: null, inProgress: false });
+    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, parentTodoId: this.props.parentId, error: null, inProgress: false });
 
     btnCloseDialog_Clicked = () => this.setState({ dialogShow: false, inProgress: false });
 
@@ -30,7 +29,7 @@ class CreateTodoComponent extends React.Component {
     btnSaveTodo_Clicked = (ev) => {
         ev.preventDefault();
         this.setState({ inProgress: true });
-        this.props.todoService.save(this.state)
+        this.props.todoService.saveSub(this.state)
             .then(() => {
                 this.props.reloadTodos();
                 this.setState(INITIAL_STATE)
@@ -42,16 +41,16 @@ class CreateTodoComponent extends React.Component {
         return (
             <span>
                 <Button variant="outline-info" size="sm" disabled={this.state.inProgress || this.props.parentLoading} onClick={this.btnOpenDialog_Clicked}>New</Button>
-                <ManageDialogComponent
-                    title="Create To-Do"
+                <ManageSubTodoComponent
+                    title="Create Sub To-Do"
                     state={this.state}
                     closeDialog={this.btnCloseDialog_Clicked}
                     confirmDialog={this.btnSaveTodo_Clicked}
                     fieldChange={this.onStateChange}>
-                </ManageDialogComponent>
+                </ManageSubTodoComponent>
             </span>
         );
     }
 }
 
-export default withTodoService(CreateTodoComponent);
+export default withTodoService(CreateSubTodoComponent);
