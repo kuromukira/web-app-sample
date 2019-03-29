@@ -32,13 +32,15 @@ class ManageDialogComponent extends React.Component {
                                     </Form.Group>
                                 </Form>
                             </Tab>
-                            <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding" disabled={this.props.state.todoId === ''}>
-                                <SubTodoComponent
-                                    todoId={this.props.state.todoId}
-                                    subs={this.props.state.sub}
-                                    inProgress={this.props.state.inProgress}
-                                ></SubTodoComponent>
-                            </Tab>
+                            {this.props.state.todoId === '' ? null :
+                                <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding">
+                                    <SubTodoComponent
+                                        parentId={this.props.state.todoId}
+                                        subs={this.props.state.sub}
+                                        inProgress={this.props.state.inProgress}
+                                    ></SubTodoComponent>
+                                </Tab>
+                            }
                         </Tabs>
                     </Container>
                     {this.props.state.error && <div className="flex-fill alert alert-danger" role="alert">{this.props.state.error.message}</div>}

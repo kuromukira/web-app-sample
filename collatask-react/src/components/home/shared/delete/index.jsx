@@ -14,13 +14,23 @@ class DeleteButtonComponent extends React.Component {
 
     btnConfirm_Clicked = () => {
         this.setState({ inProgress: true });
-        this.props.todoService.remove(this.props.todoId)
-            .then(() => {
-                this.setState({ dialogOpen: false });
-                this.props.reloadTodos();
-            })
-            .catch((error) => this.setState({ error }))
-            .finally(() => this.setState({ inProgress: false }));
+        if (this.props.todoId !== null && this.props.todoId !== undefined)
+            this.props.todoService.remove(this.props.todoId)
+                .then(() => {
+                    this.setState({ dialogOpen: false });
+                    this.props.reloadTodos();
+                })
+                .catch((error) => this.setState({ error }))
+                .finally(() => this.setState({ inProgress: false }));
+        else if (this.props.subTodoId !== null && this.props.subTodoId !== undefined)
+            this.props.todoService.removeSub(this.props.subTodoId)
+                .then(() => {
+                    this.setState({ dialogOpen: false });
+                    this.props.reloadTodos();
+                })
+                .catch((error) => this.setState({ error }))
+                .finally(() => this.setState({ inProgress: false }));
+        else this.setState({ inProgress: false });
     }
 
     render() {

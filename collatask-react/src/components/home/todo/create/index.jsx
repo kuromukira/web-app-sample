@@ -2,13 +2,10 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import ManageDialogComponent from '../manage-dialog';
 import { withTodoService } from '../../../../services/todo';
-import { localStoreKeys } from '../../../../constants/config';
 
 const INITIAL_STATE = {
     todoId: '',
     description: '',
-    addedBy: localStorage.getItem(localStoreKeys.email),
-    currentUser: localStorage.getItem(localStoreKeys.email),
     todoDate: '',
     isCompleted: false,
     // not related to todos model
