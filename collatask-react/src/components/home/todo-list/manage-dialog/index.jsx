@@ -1,5 +1,6 @@
 import './index.scss';
 import React from 'react';
+import SubTodoComponent from '../../../home/sub-todo';
 import { Button, Container, Form, Row, Modal, Tabs, Tab } from 'react-bootstrap';
 
 class ManageDialogComponent extends React.Component {
@@ -31,8 +32,12 @@ class ManageDialogComponent extends React.Component {
                                     </Form.Group>
                                 </Form>
                             </Tab>
-                            <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding">
-
+                            <Tab eventKey="subTodoTab" title="Sub To-Do" className="tab-content-padding" disabled={this.props.state.todoId === ''}>
+                                <SubTodoComponent
+                                    todoId={this.props.state.todoId}
+                                    subs={this.props.state.sub}
+                                    inProgress={this.props.state.inProgress}
+                                ></SubTodoComponent>
                             </Tab>
                         </Tabs>
                     </Container>
