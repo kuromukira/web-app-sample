@@ -3,15 +3,14 @@ import moment from 'moment';
 import { Button } from 'react-bootstrap';
 import ManageDialogComponent from '../manage-dialog';
 import { withTodoService } from '../../../../services/todo';
-import { localStoreKeys } from '../../../../constants/config';
 
 const INITIAL_STATE = {
     todoId: '',
     description: '',
     addedBy: '',
-    currentUser: localStorage.getItem(localStoreKeys.email),
     todoDate: '',
     isCompleted: false,
+    sub: [],
     // not related to todos model
     dialogShow: false,
     error: null,
@@ -25,7 +24,7 @@ class ModifyButtonComponent extends React.Component {
         this.state = INITIAL_STATE;
     }
 
-    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, error: null, success: false, inProgress: false });
+    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, error: null, inProgress: false });
 
     btnCloseDialog_Clicked = () => this.setState({ dialogShow: false, inProgress: false });
 
@@ -40,6 +39,7 @@ class ModifyButtonComponent extends React.Component {
                     addedBy: todo.addedBy,
                     todoDate: moment(todo.todoDate).format('YYYY-MM-DD'),
                     isCompleted: todo.isCompleted,
+                    sub: todo.sub
                 });
             })
             .catch((error) => this.setState({ error }))
@@ -60,7 +60,7 @@ class ModifyButtonComponent extends React.Component {
     render() {
         return (
             <span>
-                <Button className="mx-auto" variant="outline-secondary" size="sm" onClick={this.btnOpenDialog_Clicked}>Modify</Button>
+                <Button className="mx-auto" variant="outline-secondary" size="sm" disabled={this.state.inProgress || this.props.parentLoading} onClick={this.btnOpenDialog_Clicked}>Modify</Button>
                 <ManageDialogComponent
                     title="Edit To-Do"
                     state={this.state}

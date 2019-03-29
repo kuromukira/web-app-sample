@@ -15,6 +15,7 @@ function NavigationComponent() {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="mr-auto">
                             {authUser ? <Link className="nav-item nav-link" to={routes.HOME}>Home</Link> : <div></div>}
+                            {authUser ? <Link className="nav-item nav-link" to={routes.CALENDAR}>Calendar</Link> : <div></div>}
                             {authUser ? <SignOutComponent></SignOutComponent> : <Link className="nav-item nav-link" to={routes.SIGN_IN}>Sign In</Link>}
                         </Nav>
                     </Navbar.Collapse>

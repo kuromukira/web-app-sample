@@ -6,6 +6,7 @@ import {
 import * as routes from '../../constants/routes';
 
 import NavigationComponent from '../navigation';
+import CalendarComponent from '../calendar';
 import HomePageComponent from '../home';
 import LoginPageComponent from '../login';
 import { withAuthentication } from '../../services/session';
@@ -17,6 +18,7 @@ function AppComponent() {
             <div className="main-body-padding">
                 <Route exact path={routes.LANDING} component={LoginPageComponent} />
                 <Route exact path={routes.HOME} component={HomePageComponent} />
+                <Route exact path={routes.CALENDAR} component={CalendarComponent} />
                 <Route exact path={routes.SIGN_IN} component={LoginPageComponent} />
             </div>
         </Router>

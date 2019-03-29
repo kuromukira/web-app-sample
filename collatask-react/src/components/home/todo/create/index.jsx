@@ -2,13 +2,10 @@ import React from 'react';
 import { Button } from 'react-bootstrap';
 import ManageDialogComponent from '../manage-dialog';
 import { withTodoService } from '../../../../services/todo';
-import { localStoreKeys } from '../../../../constants/config';
 
 const INITIAL_STATE = {
     todoId: '',
     description: '',
-    addedBy: localStorage.getItem(localStoreKeys.email),
-    currentUser: localStorage.getItem(localStoreKeys.email),
     todoDate: '',
     isCompleted: false,
     // not related to todos model
@@ -24,7 +21,7 @@ class CreateTodoComponent extends React.Component {
         this.state = INITIAL_STATE;
     }
 
-    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, error: null, success: false, inProgress: false });
+    onStateChange = (ev) => this.setState({ [ev.target.name]: ev.target.value, error: null, inProgress: false });
 
     btnCloseDialog_Clicked = () => this.setState({ dialogShow: false, inProgress: false });
 
@@ -44,7 +41,7 @@ class CreateTodoComponent extends React.Component {
     render() {
         return (
             <span>
-                <Button variant="outline-info" size="sm" disabled={this.state.inProgress} onClick={this.btnOpenDialog_Clicked}>New</Button>
+                <Button variant="outline-info" size="sm" disabled={this.state.inProgress || this.props.parentLoading} onClick={this.btnOpenDialog_Clicked}>New</Button>
                 <ManageDialogComponent
                     title="Create To-Do"
                     state={this.state}
