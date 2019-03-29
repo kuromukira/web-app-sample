@@ -18,8 +18,8 @@ class DialogPromptComponent extends React.Component {
                     {this.props.error && <div className="flex-fill alert alert-danger" role="alert">{this.props.error.message}</div>}
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="danger" size="sm" onClick={this.btnCloseDialog_Clicked}>No</Button>
-                    <Button variant="primary" size="sm" onClick={this.btnConfirm_Clicked}>Yes</Button>
+                    <Button variant="danger" size="sm" disabled={this.props.inProgress} onClick={this.btnCloseDialog_Clicked}>No</Button>
+                    <Button variant="primary" size="sm" disabled={this.props.inProgress} onClick={this.btnConfirm_Clicked}>Yes</Button>
                 </Modal.Footer>
             </Modal>
         );

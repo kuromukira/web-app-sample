@@ -62,7 +62,7 @@ class ModifyButtonComponent extends React.Component {
     render() {
         return (
             <span>
-                <Button className="mx-auto" variant="outline-secondary" size="sm" onClick={this.btnOpenDialog_Clicked}>Modify</Button>
+                <Button className="mx-auto" variant="outline-secondary" size="sm" disabled={this.state.inProgress || this.props.parentLoading} onClick={this.btnOpenDialog_Clicked}>Modify</Button>
                 <ManageDialogComponent
                     title="Edit To-Do"
                     state={this.state}

@@ -19,14 +19,10 @@ class HomePageComponent extends React.Component {
     btnReload_Clicked = () => {
         this.setState({ inProgress: true, error: null });
         this.props.todoService.getAll()
-            .then((result) => {
-                this.setState({ todos: result });
-            })
+            .then((result) => this.setState({ todos: result }))
             .catch((error) => this.setState({ error }))
             .finally(() => this.setState({ inProgress: false }));
     }
-
-    btnAdd_Clicked = () => { }
 
     render() {
         return (
@@ -34,7 +30,7 @@ class HomePageComponent extends React.Component {
                 <Container>
                     <Row className="text-right">
                         <Col>
-                            <CreateTodoComponent reloadTodos={this.btnReload_Clicked} />
+                            <CreateTodoComponent reloadTodos={this.btnReload_Clicked} parentLoading={this.state.inProgress} />
                             <Button variant="outline-dark" size="sm" disabled={this.state.inProgress} onClick={this.btnReload_Clicked}>Refresh</Button>
                         </Col>
                     </Row>
@@ -45,7 +41,7 @@ class HomePageComponent extends React.Component {
                     </Row>
                     <Row>
                         <Col xs justify="center">
-                            <TodoListComponent todos={this.state.todos} reloadTodos={this.btnReload_Clicked} />
+                            <TodoListComponent todos={this.state.todos} parentLoading={this.state.inProgress} reloadTodos={this.btnReload_Clicked} />
                         </Col>
                     </Row>
                 </Container>

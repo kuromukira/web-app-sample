@@ -44,7 +44,7 @@ class CreateTodoComponent extends React.Component {
     render() {
         return (
             <span>
-                <Button variant="outline-info" size="sm" disabled={this.state.inProgress} onClick={this.btnOpenDialog_Clicked}>New</Button>
+                <Button variant="outline-info" size="sm" disabled={this.state.inProgress || this.props.parentLoading} onClick={this.btnOpenDialog_Clicked}>New</Button>
                 <ManageDialogComponent
                     title="Create To-Do"
                     state={this.state}
