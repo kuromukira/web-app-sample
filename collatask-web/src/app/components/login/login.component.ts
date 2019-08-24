@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
-import { AuthService } from 'src/app/services/_index.service';
+import { AuthService, SignalRService } from 'src/app/services/_index.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { PasswordErrorStateMatcher } from 'src/app/helpers/error-state/error-state.service';
 
@@ -48,6 +48,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private activeRoute: ActivatedRoute,
         private authService: AuthService,
+        private signalRService: SignalRService,
         private snackbar: MatSnackBar) { }
 
     ngOnInit() {
@@ -67,8 +68,10 @@ export class LoginComponent implements OnInit {
             this.initiateOnProgress();
             this.authService.signIn(this.loginFormGroup.controls.emailAddress.value, this.loginFormGroup.controls.passwordField.value)
                 .then((result) => {
-                    if (result.success)
+                    if (result.success) {
+                        this.signalRService.startConnection();
                         this.router.navigate([this.targetUrl]);
+                    }
                     else this.snackbar.open(result.message, null, { duration: 4000 });
                 }).finally(() => this.isInProgress = false)
         }
@@ -78,8 +81,10 @@ export class LoginComponent implements OnInit {
     btnGoogleSignIn_Clicked() {
         this.initiateOnProgress();
         this.authService.signInGoogle().then((result) => {
-            if (result.success)
+            if (result.success) {
+                this.signalRService.startConnection();
                 this.router.navigate([this.targetUrl]);
+            }
             else this.snackbar.open(result.message, null, { duration: 4000 });
         }).finally(() => this.isInProgress = false)
     }

@@ -5,14 +5,14 @@
   "dependencies": {
     "bootstrap": "^4.3.1",
     "braces": "^2.3.2",
-    "firebase": "^5.9.0",
+    "firebase": "^5.9.1",
     "jquery": "^3.3.1",
     "moment": "^2.24.0",
     "node-sass": "^4.11.0",
-    "react": "^16.8.4",
-    "react-bootstrap": "^1.0.0-beta.5",
-    "react-dom": "^16.8.4",
-    "react-router-dom": "^4.4.0",
+    "react": "^16.8.5",
+    "react-bootstrap": "^1.0.0-beta.6",
+    "react-dom": "^16.8.5",
+    "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8"
   },
   "scripts": {

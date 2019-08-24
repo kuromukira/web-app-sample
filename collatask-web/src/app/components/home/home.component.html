@@ -15,24 +15,8 @@
     </div>
     <div *ngIf="lTodos.length > 0" fxLayout="column" fxFlex="40" fxFlex.md="50" fxFlex.sm="70" fxFlex.xs="100"
         fxLayoutGap="2%">
-        <mat-card *ngFor="let todo of lTodos">
-            <mat-card-header>
-                <mat-card-title>{{ todo.description }}</mat-card-title>
-                <mat-card-subtitle>Added By : {{ todo.addedBy }}</mat-card-subtitle>
-                <mat-card-subtitle *ngIf="todo.isCompleted"><strong><em>(Complete)</em></strong></mat-card-subtitle>
-            </mat-card-header>
-            <mat-card-actions fxLayoutAlign="end center" fxLayoutGap="1%">
-                <button mat-icon-button [disabled]="inProgress" color="accent" (click)="btnInfo_Clicked(todo.todoId)">
-                    <mat-icon>information</mat-icon>
-                </button>
-                <button mat-icon-button [disabled]="inProgress" color="warn" (click)="btnRemove_Clicked(todo.todoId)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <button mat-icon-button *ngIf="!todo.isCompleted" [disabled]="inProgress" color="primary"
-                    (click)="btnComplete_Clicked(todo.todoId)">
-                    <mat-icon>done</mat-icon>
-                </button>
-            </mat-card-actions>
-        </mat-card>
+        <div *ngFor="let todo of lTodos">
+            <todo-list [todoModel]="todo"></todo-list>
+        </div>
     </div>
 </section>

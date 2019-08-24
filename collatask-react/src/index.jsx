@@ -7,6 +7,7 @@ import * as serviceWorker from './serviceWorker';
 
 import FirebaseService, { FirebaseContext } from './services/firebase';
 import TodoService, { TodoContext } from './services/todo';
+import CalendarService, { CalendarContext } from './services/calendar';
 
 document.title = "To-Do List";
 
@@ -14,7 +15,9 @@ ReactDOM.render(
     // Initialize firebase context
     <FirebaseContext.Provider value={new FirebaseService()}>
         <TodoContext.Provider value={new TodoService()}>
-            <AppComponent />
+            <CalendarContext.Provider value={new CalendarService()}>
+                <AppComponent />
+            </CalendarContext.Provider>
         </TodoContext.Provider>
     </FirebaseContext.Provider>,
     document.getElementById('root')
